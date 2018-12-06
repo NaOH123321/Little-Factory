@@ -4,7 +4,8 @@ import { Quote } from './../../domain';
 import { Observable } from 'rxjs';
 import { Store, select } from '@ngrx/store';
 import * as fromRoot from '../../reducers'
-import * as actions from './../../actions/quote.action';
+import * as quoterActions from './../../actions/quote.action';
+import * as authActions from './../../actions/auth.action';
 
 @Component({
   selector: 'app-login',
@@ -15,24 +16,21 @@ export class LoginComponent implements OnInit {
 
   form: FormGroup;
   quote$: Observable<Quote>;
-  constructor(private fb: FormBuilder, private $store: Store<fromRoot.State>) {
-    this.quote$ = $store.pipe(select(fromRoot.getQuote));
-    // this.quoteService$.getQuote().subscribe(q =>
-    //   $store.dispatch(new actions.QuoteSuccessAction(q))
-    // );
-    $store.dispatch(new actions.QuoteAction(null));
+  constructor(private fb: FormBuilder, private store$: Store<fromRoot.State>) {
+    this.quote$ = store$.pipe(select(fromRoot.getQuote));
+    store$.dispatch(new quoterActions.QuoteAction(null));
   }
 
   ngOnInit() {
     this.form = this.fb.group({
-      email: ['12345678@qq.com', [Validators.required, Validators.email]],
-      password: ['', Validators.required]
+      email: ['lisi@163.com', [Validators.required, Validators.email]],
+      password: ['Ls123456', Validators.required]
     });
   }
 
   onSubmit({ value, valid }, ev: Event) {
     ev.preventDefault();
-    console.log(JSON.stringify(value));
-    console.log(valid);
+
+    this.store$.dispatch(new authActions.AuthLoginAction(value));
   }
 }

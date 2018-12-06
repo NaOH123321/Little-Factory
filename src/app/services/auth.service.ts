@@ -22,11 +22,11 @@ export class AuthService {
     constructor(private http: HttpClient, @Inject("BASE_CONFIG") private config) { }
 
     register(user: User): Observable<Auth> {
-        user.id = null;
         const url = `${this.config.uri}/${this.domain}`;
         return this.http.get<User[]>(url, { params: { "email": user.email } }).pipe(
             switchMap(res => {
-                if (res.length > 0) throwError("user existed");
+                if (res.length > 0)
+                    throw new Error("user existed");
                 return this.http.post<User>(url, JSON.stringify(user), { headers: this.headers }).pipe(
                     map(r => ({ token: this.token, user: r }))
                 );
@@ -38,7 +38,8 @@ export class AuthService {
         const url = `${this.config.uri}/${this.domain}`;
         return this.http.get<User[]>(url, { params: { "email": username, "password": password } }).pipe(
             map(res => {
-                if (res.length === 0) throwError('Username or password incorrect');
+                if (res.length === 0)
+                    throw new Error('Username or password incorrect');
                 return {
                     token: this.token,
                     user: res[0]

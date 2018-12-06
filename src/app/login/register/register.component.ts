@@ -5,6 +5,9 @@ import { Subscription } from 'rxjs';
 import { extractInfo, isValidAddr, getAddrByCode } from '../../utils/identity.util';
 import { isValidDate } from '../../utils/date.util';
 import { debug } from '../../utils/debug.util';
+import * as fromRoot from '../../reducers'
+import * as authActions from './../../actions/auth.action';
+import { Store } from '@ngrx/store';
 
 @Component({
   selector: 'app-register',
@@ -17,7 +20,7 @@ export class RegisterComponent implements OnInit {
 
   items: string[] = [];
   private sub: Subscription;
-  constructor(private fb: FormBuilder) { }
+  constructor(private fb: FormBuilder, private store$: Store<fromRoot.State>) { }
 
   ngOnInit() {
     for (let i = 1; i <= 16; i++) {
@@ -60,7 +63,6 @@ export class RegisterComponent implements OnInit {
 
   onSubmit({ value, valid }, ev: Event) {
     ev.preventDefault();
-    console.log(JSON.stringify(value));
-    console.log(valid);
+    this.store$.dispatch(new authActions.AuthRegisterAction(value));
   }
 }

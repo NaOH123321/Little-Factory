@@ -1,5 +1,5 @@
 import { Action } from '@ngrx/store';
-import { Auth, User } from './../domain';
+import { Auth, User, Err } from './../domain';
 
 /**
  * For each action type in an action group, make a simple
@@ -35,7 +35,7 @@ export class AuthLoginSuccessAction implements Action {
 export class AuthLoginFailAction implements Action {
     readonly type = AuthActionTypes.AuthLoginFailAction;
 
-    constructor(public payload: string) { }
+    constructor(public payload: Err) { }
 }
 
 export class AuthRegisterAction implements Action {
@@ -53,7 +53,7 @@ export class AuthRegisterSuccessAction implements Action {
 export class AuthRegisterFailAction implements Action {
     readonly type = AuthActionTypes.AuthRegisterFailAction;
 
-    constructor(public payload: string) { }
+    constructor(public payload: Err) { }
 }
 export class AuthlogoutAction implements Action {
     readonly type = AuthActionTypes.AuthlogoutAction;
