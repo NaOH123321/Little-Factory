@@ -1,0 +1,28 @@
+<div class="address-group">
+    <div>
+        <mat-form-field>
+            <mat-select placeholder="请输入省份" (selectionChange)="onProvinceChange()" [(ngModel)]="address.province">
+                <mat-option *ngFor="let province of provinces$ | async" [value]="province">{{province}}</mat-option>
+            </mat-select>
+        </mat-form-field>
+    </div>
+    <div>
+        <mat-form-field>
+            <mat-select placeholder="请输入城市" (selectionChange)="onCityChange()" [(ngModel)]="address.city">
+                <mat-option *ngFor="let city of cities$ | async" [value]="city">{{city}}</mat-option>
+            </mat-select>
+        </mat-form-field>
+    </div>
+    <div>
+        <mat-form-field>
+            <mat-select placeholder="请输入区县" (selectionChange)="onDistrictChange()" [(ngModel)]="address.district">
+                <mat-option *ngFor="let district of districts$ | async" [value]="district">{{district}}</mat-option>
+            </mat-select>
+        </mat-form-field>
+    </div>
+    <div class="street">
+        <mat-form-field class="full-width">
+            <input type="text" matInput placeholder="请输入街道地址" (change)="onStreetChange()" [(ngModel)]="address.street">
+        </mat-form-field>
+    </div>
+</div>

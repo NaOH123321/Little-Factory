@@ -1,0 +1,14 @@
+.fill {
+    flex: 1;
+    text-align: center;
+}
+
+.head-container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+    width: 100%;
+}
