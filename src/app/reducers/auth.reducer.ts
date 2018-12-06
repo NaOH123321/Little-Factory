@@ -1,7 +1,7 @@
 import { Auth, Err } from "../domain";
 import * as authAction from '../actions/auth.action';
 
-export const initialState: Auth = {};
+const initialState: Auth = {};
 
 export function reducer(state = initialState, action: authAction.AuthActions): Auth {
     switch (action.type) {
@@ -11,6 +11,8 @@ export function reducer(state = initialState, action: authAction.AuthActions): A
         case authAction.AuthActionTypes.AuthLoginFailAction:
         case authAction.AuthActionTypes.AuthRegisterFailAction:
             return { err: action.payload };
+        case authAction.AuthActionTypes.AuthlogoutAction:
+            return initialState;
         default: {
             return state;
         }

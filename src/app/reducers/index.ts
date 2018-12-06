@@ -14,11 +14,6 @@ export interface State {
     auth: Auth
 };
 
-const initialState: State = {
-    quote: fromQuote.initialState,
-    auth: fromAuth.initialState
-};
-
 const reducers: ActionReducerMap<State> = {
     quote: fromQuote.reducer,
     auth: fromAuth.reducer
@@ -47,7 +42,6 @@ export const getQuote = createSelector(getQuoteState, fromQuote.getQuote);
 @NgModule({
     imports: [
         StoreModule.forRoot(reducers, { metaReducers }),
-        // RouterStoreModule.connectRouter(),
         StoreRouterConnectingModule,
         !environment.production ? StoreDevtoolsModule.instrument({ maxAge: 50 }) : [],
     ]

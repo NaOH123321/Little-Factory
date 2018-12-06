@@ -84,8 +84,8 @@ export class ProjectListComponent implements OnInit, OnDestroy {
       filter(n => n),
       switchMap(_ => this.service$.del(project))
     ).
-      subscribe(project => {
-        console.log(project);
+      subscribe(_ => {
+        console.log(_);
         this.projects = this.projects.filter(p => p.id !== project.id);
         this.cd.markForCheck();
       });
