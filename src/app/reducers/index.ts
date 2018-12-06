@@ -3,20 +3,25 @@ import { StoreModule, ActionReducer, ActionReducerMap, MetaReducer, createFeatur
 import { StoreRouterConnectingModule } from '@ngrx/router-store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 
+import { Auth } from './../domain';
 import * as fromQuote from './quote.reducer';
+import * as fromAuth from './auth.reducer';
 import { environment } from './../../environments/environment';
 import { storeFreeze } from 'ngrx-store-freeze'
 
 export interface State {
-    quote: fromQuote.State
+    quote: fromQuote.State,
+    auth: Auth
 };
 
 const initialState: State = {
-    quote: fromQuote.initialState
+    quote: fromQuote.initialState,
+    auth: fromAuth.initialState
 };
 
 const reducers: ActionReducerMap<State> = {
-    quote: fromQuote.reducer
+    quote: fromQuote.reducer,
+    auth: fromAuth.reducer
 }
 
 // console.log all actions
@@ -35,6 +40,7 @@ export const metaReducers: MetaReducer<State>[] = !environment.production ? [
 ] : [];
 
 export const getQuoteState = createFeatureSelector<fromQuote.State>('quote');
+export const getAuth = createFeatureSelector<Auth>('auth');
 
 export const getQuote = createSelector(getQuoteState, fromQuote.getQuote);
 

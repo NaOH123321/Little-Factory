@@ -11,6 +11,7 @@ export class QuoteEffects {
     @Effect()
     getQuote$: Observable<Action> = this.actions$.pipe(
         ofType<actions.QuoteAction>(actions.QuoteActionTypes.QuoteAction),
+        map(action => action.payload),
         switchMap(_ =>
             this.service$.getQuote().pipe(
                 map(quote => new actions.QuoteSuccessAction(quote)),
