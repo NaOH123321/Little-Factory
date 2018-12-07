@@ -28,7 +28,7 @@ export class AuthService {
                 if (res.length > 0)
                     throw new Error("user existed");
                 return this.http.post<User>(url, JSON.stringify(user), { headers: this.headers }).pipe(
-                    map(r => ({ token: this.token, user: r }))
+                    map(r => ({ token: this.token, user: r, userId: r.id }))
                 );
             })
         );
@@ -42,7 +42,8 @@ export class AuthService {
                     throw new Error('Username or password incorrect');
                 return {
                     token: this.token,
-                    user: res[0]
+                    user: res[0],
+                    userId: res[0].id
                 }
             })
         )

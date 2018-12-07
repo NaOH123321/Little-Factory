@@ -10,7 +10,7 @@ import { switchMap, map, catchError } from 'rxjs/operators';
 export class QuoteEffects {
     @Effect()
     getQuote$: Observable<Action> = this.actions$.pipe(
-        ofType<actions.QuoteAction>(actions.QuoteActionTypes.QuoteAction),
+        ofType<actions.QuoteAction>(actions.QuoteActionTypes.QUOTE),
         map(action => action.payload),
         switchMap(_ =>
             this.service$.getQuote().pipe(

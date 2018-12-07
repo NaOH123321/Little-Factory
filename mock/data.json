@@ -6,9 +6,7 @@
       "avatar": "avatars:svg-1",
       "email": "wpcfan@163.com",
       "id": "37489e0c-df34-c261-71c4-ce75357e3035",
-      "projectIds": [
-        "2"
-      ]
+      "projectIds": []
     },
     {
       "password": "Ls123456",
@@ -17,7 +15,8 @@
       "email": "lisi@163.com",
       "id": "BkkDvwee-",
       "projectIds": [
-        "1"
+        "1",
+        "2"
       ]
     },
     {
@@ -59,8 +58,8 @@
       "desc": "这是一个企业内部项目",
       "coverImg": "assets/img/covers/0.jpg",
       "members": [
-        "1",
-        "2"
+        "BkkDvwee-",
+        "3"
       ]
     },
     {
@@ -69,7 +68,8 @@
       "desc": "这是一个企业内部项目",
       "coverImg": "assets/img/covers/1.jpg",
       "members": [
-        "1"
+        "BkkDvwee-",
+        "4"
       ]
     }
   ],

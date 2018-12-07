@@ -5,8 +5,8 @@ import { Action } from '@ngrx/store';
  * enum object for all of this group's action types.
  */
 export enum RouterActionTypes {
-    GoAction = '[Router] Router Go',
-    BackAction = '[Router] Router Back'
+    GO = '[Router] Router Go',
+    BACK = '[Router] Router Back'
 };
 
 /**
@@ -15,13 +15,13 @@ export enum RouterActionTypes {
  * type checking in reducer functions.
  */
 export class GoAction implements Action {
-    readonly type = RouterActionTypes.GoAction;
+    readonly type = RouterActionTypes.GO;
 
     constructor(public payload: { path: any[], queryParams?: object }) { }
 }
 
 export class BackAction implements Action {
-    readonly type = RouterActionTypes.BackAction;
+    readonly type = RouterActionTypes.BACK;
 
     constructor(public payload: null) { }
 }

@@ -4,11 +4,12 @@ import { NewProjectComponent } from '../new-project/new-project.component';
 import { InviteComponent } from '../invite/invite.component';
 import { ConfirmDialogComponent } from 'src/app/shared/confirm-dialog/confirm-dialog.component';
 import { slideToRight } from './../../anim/router.anim';
-import { ProjectService } from './../../services/project.service';
-import { range, Observable, Subscription } from 'rxjs';
+import { range, Observable } from 'rxjs';
 import { map, reduce, switchMap, take } from 'rxjs/operators';
-import { filter } from 'rxjs/operators';
 import { Project } from '../../domain';
+import * as fromRoot from '../../reducers';
+import * as projectActions from './../../actions/project.action';
+import { Store, select } from '@ngrx/store';
 
 @Component({
   selector: 'app-project-list',
@@ -19,41 +20,34 @@ import { Project } from '../../domain';
   ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ProjectListComponent implements OnInit, OnDestroy {
+export class ProjectListComponent implements OnInit {
 
   @HostBinding("@routeAnim") routeAnim;
 
-  projects: Project[] = [];
-  sub: Subscription;
-  constructor(private dialog: MatDialog, private cd: ChangeDetectorRef, private service$: ProjectService) { }
+  projects$: Observable<Project[]>;
+  constructor(private dialog: MatDialog, private cd: ChangeDetectorRef, private store$: Store<fromRoot.State>) { }
 
   ngOnInit() {
-    this.sub = this.service$.get("1").subscribe(
-      projects => {
-        this.projects = projects;
-        this.cd.markForCheck();
-      });
-  }
+    this.store$.dispatch(new projectActions.ProjectLoadAction(null));
+    this.projects$ = this.store$.pipe(select(fromRoot.getProjectAll));
 
-  ngOnDestroy() {
-    if (this.sub) {
-      this.sub.unsubscribe();
-    }
+    // this.sub = this.service$.get("1").subscribe(
+    //   projects => {
+    //     this.projects = projects;
+    //     this.cd.markForCheck();
+    //   });
   }
 
   openNewProjectDialog() {
     const img = `assets/img/covers/${Math.ceil(Math.random() * 40)}_tn.jpg`;
     const dialogRef = this.dialog.open(NewProjectComponent,
       { data: { thumbnails: this.getThumbnails(), img: img } });
-    dialogRef.afterClosed().pipe(
-      take(1),
-      filter(n => n),
-      map(val => ({ ...val, coverImg: this.buildImgSrc(val.coverImg) })),
-      switchMap(project => this.service$.add(project))
-    ).
-      subscribe(project => {
-        this.projects = [...this.projects, project];
-        this.cd.markForCheck();
+    dialogRef.afterClosed().pipe(take(1)).
+      subscribe(val => {
+        if (val) {
+          const project = { ...val, coverImg: this.buildImgSrc(val.coverImg) };
+          this.store$.dispatch(new projectActions.ProjectAddAction(project));
+        }
       });
   }
 
@@ -64,30 +58,22 @@ export class ProjectListComponent implements OnInit, OnDestroy {
   launchUpdateDialog(project: Project) {
     const dialogRef = this.dialog.open(NewProjectComponent,
       { data: { thumbnails: this.getThumbnails(), project: project } });
-    dialogRef.afterClosed().pipe(
-      take(1),
-      filter(n => n),
-      map(val => ({ ...val, id: project.id, coverImg: this.buildImgSrc(val.coverImg) })),
-      switchMap(project => this.service$.update(project))
-    ).
-      subscribe(project => {
-        const index = this.projects.map(p => p.id).indexOf(project.id);
-        this.projects = [...this.projects.slice(0, index), project, ...this.projects.slice(index + 1)];
-        this.cd.markForCheck();
+    dialogRef.afterClosed().pipe(take(1)).
+      subscribe(val => {
+        if (val) {
+          const pjr = { ...val, id: project.id, coverImg: this.buildImgSrc(val.coverImg) };
+          this.store$.dispatch(new projectActions.ProjectUpdateAction(pjr));
+        }
       });
   }
 
   launchConfirmDialog(project: Project) {
-    const dialogRef = this.dialog.open(ConfirmDialogComponent, { data: { title: "删除项目", content: "您确定删除该项目吗？" } });
-    dialogRef.afterClosed().pipe(
-      take(1),
-      filter(n => n),
-      switchMap(_ => this.service$.del(project))
-    ).
-      subscribe(_ => {
-        console.log(_);
-        this.projects = this.projects.filter(p => p.id !== project.id);
-        this.cd.markForCheck();
+    const dialogRef = this.dialog.open(ConfirmDialogComponent,
+      { data: { title: "删除项目", content: "您确定删除该项目吗？" } });
+    dialogRef.afterClosed().pipe(take(1)).
+      subscribe(val => {
+        if (val)
+          this.store$.dispatch(new projectActions.ProjectDeleteAction(project))
       });
   }
 

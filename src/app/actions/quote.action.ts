@@ -6,9 +6,9 @@ import { Quote } from './../domain';
  * enum object for all of this group's action types.
  */
 export enum QuoteActionTypes {
-    QuoteAction = '[Quote] Quote',
-    QuoteSuccessAction = '[Quote] Quote Success',
-    QuoteFailAction = '[Quote] Quote Fail'
+    QUOTE = '[Quote] Quote',
+    QUOTE_SUCCESS = '[Quote] Quote Success',
+    QUOTE_FAIL = '[Quote] Quote Fail'
 };
 
 /**
@@ -17,19 +17,19 @@ export enum QuoteActionTypes {
  * type checking in reducer functions.
  */
 export class QuoteAction implements Action {
-    readonly type = QuoteActionTypes.QuoteAction;
+    readonly type = QuoteActionTypes.QUOTE;
 
     constructor(public payload: null) { }
 }
 
 export class QuoteSuccessAction implements Action {
-    readonly type = QuoteActionTypes.QuoteSuccessAction;
+    readonly type = QuoteActionTypes.QUOTE_SUCCESS;
 
     constructor(public payload: Quote) { }
 }
 
 export class QuoteFailAction implements Action {
-    readonly type = QuoteActionTypes.QuoteFailAction;
+    readonly type = QuoteActionTypes.QUOTE_FAIL;
 
     constructor(public payload: string) { }
 }

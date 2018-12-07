@@ -12,7 +12,7 @@ import { User } from '../domain';
 export class AuthEffects {
     @Effect()
     login$: Observable<Action> = this.actions$.pipe(
-        ofType<actions.AuthActions>(actions.AuthActionTypes.AuthLoginAction),
+        ofType<actions.AuthActions>(actions.AuthActionTypes.AUTH_LOGIN),
         map(action => action.payload),
         switchMap((login: { email: string, password: string }) =>
             this.service$.login(login.email, login.password).pipe(
@@ -30,13 +30,13 @@ export class AuthEffects {
 
     @Effect()
     loginAndNavigate$: Observable<Action> = this.actions$.pipe(
-        ofType<actions.AuthActions>(actions.AuthActionTypes.AuthLoginSuccessAction),
+        ofType<actions.AuthActions>(actions.AuthActionTypes.AUTH_LOGIN_SUCCESS),
         map(_ => new routerActions.GoAction({ path: ['/projects'] }))
     );
 
     @Effect()
     register$: Observable<Action> = this.actions$.pipe(
-        ofType<actions.AuthActions>(actions.AuthActionTypes.AuthRegisterAction),
+        ofType<actions.AuthActions>(actions.AuthActionTypes.AUTH_REGISTER),
         map(action => action.payload),
         switchMap((user: User) =>
             this.service$.register(user).pipe(
@@ -55,13 +55,13 @@ export class AuthEffects {
 
     @Effect()
     registerAndNavigate$: Observable<Action> = this.actions$.pipe(
-        ofType<actions.AuthActions>(actions.AuthActionTypes.AuthRegisterSuccessAction),
+        ofType<actions.AuthActions>(actions.AuthActionTypes.AUTH_REGISTER_SUCCESS),
         map(_ => new routerActions.GoAction({ path: ['/projects'] }))
     );
 
     @Effect()
     logout$: Observable<Action> = this.actions$.pipe(
-        ofType<actions.AuthActions>(actions.AuthActionTypes.AuthlogoutAction),
+        ofType<actions.AuthActions>(actions.AuthActionTypes.AUTH_LOGOUT),
         map(_ => new routerActions.GoAction({ path: ['/'] }))
     );
 

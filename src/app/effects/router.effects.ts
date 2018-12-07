@@ -8,7 +8,7 @@ import { tap, map } from 'rxjs/operators';
 export class RouterEffects {
     @Effect({ dispatch: false })
     navigate$ = this.actions$.pipe(
-        ofType<actions.GoAction>(actions.RouterActionTypes.GoAction),
+        ofType<actions.GoAction>(actions.RouterActionTypes.GO),
         map(action => action.payload),
         tap(({ path, queryParams: queryParams }) =>
             this.router.navigate(path, { queryParams })

@@ -6,13 +6,13 @@ import { Auth, User, Err } from './../domain';
  * enum object for all of this group's action types.
  */
 export enum AuthActionTypes {
-    AuthLoginAction = '[Auth] Auth Login',
-    AuthLoginSuccessAction = '[Auth] Auth Login Success',
-    AuthLoginFailAction = '[Auth] Auth Login Fail',
-    AuthRegisterAction = '[Auth] Auth Register',
-    AuthRegisterSuccessAction = '[Auth] Auth Register Success',
-    AuthRegisterFailAction = '[Auth] Auth Register Fail',
-    AuthlogoutAction = '[Auth] Auth Logout',
+    AUTH_LOGIN = '[Auth] Auth Login',
+    AUTH_LOGIN_SUCCESS = '[Auth] Auth Login Success',
+    AUTH_LOGIN_FAIL = '[Auth] Auth Login Fail',
+    AUTH_REGISTER = '[Auth] Auth Register',
+    AUTH_REGISTER_SUCCESS = '[Auth] Auth Register Success',
+    AUTH_REGISTER_FAIL = '[Auth] Auth Register Fail',
+    AUTH_LOGOUT = '[Auth] Auth Logout',
 };
 
 /**
@@ -21,42 +21,42 @@ export enum AuthActionTypes {
  * type checking in reducer functions.
  */
 export class AuthLoginAction implements Action {
-    readonly type = AuthActionTypes.AuthLoginAction;
+    readonly type = AuthActionTypes.AUTH_LOGIN;
 
     constructor(public payload: { email: string, password: string }) { }
 }
 
 export class AuthLoginSuccessAction implements Action {
-    readonly type = AuthActionTypes.AuthLoginSuccessAction;
+    readonly type = AuthActionTypes.AUTH_LOGIN_SUCCESS;
 
     constructor(public payload: Auth) { }
 }
 
 export class AuthLoginFailAction implements Action {
-    readonly type = AuthActionTypes.AuthLoginFailAction;
+    readonly type = AuthActionTypes.AUTH_LOGIN_FAIL;
 
     constructor(public payload: Err) { }
 }
 
 export class AuthRegisterAction implements Action {
-    readonly type = AuthActionTypes.AuthRegisterAction;
+    readonly type = AuthActionTypes.AUTH_REGISTER;
 
     constructor(public payload: User) { }
 }
 
 export class AuthRegisterSuccessAction implements Action {
-    readonly type = AuthActionTypes.AuthRegisterSuccessAction;
+    readonly type = AuthActionTypes.AUTH_REGISTER_SUCCESS;
 
     constructor(public payload: Auth) { }
 }
 
 export class AuthRegisterFailAction implements Action {
-    readonly type = AuthActionTypes.AuthRegisterFailAction;
+    readonly type = AuthActionTypes.AUTH_REGISTER_FAIL;
 
     constructor(public payload: Err) { }
 }
 export class AuthlogoutAction implements Action {
-    readonly type = AuthActionTypes.AuthlogoutAction;
+    readonly type = AuthActionTypes.AUTH_LOGOUT;
 
     constructor(public payload: null) { }
 }
