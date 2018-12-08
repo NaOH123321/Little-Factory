@@ -63,6 +63,14 @@ export class RegisterComponent implements OnInit {
 
   onSubmit({ value, valid }, ev: Event) {
     ev.preventDefault();
-    this.store$.dispatch(new authActions.AuthRegisterAction(value));
+    this.store$.dispatch(new authActions.AuthRegisterAction({
+      email: value.email,
+      name: value.name,
+      password: value.password,
+      avatar: value.avatar,
+      identity: value.identity,
+      birthday: value.birthday,
+      address: value.address
+    }));
   }
 }

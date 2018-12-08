@@ -39,7 +39,7 @@ export class ProjectListComponent implements OnInit {
   }
 
   openNewProjectDialog() {
-    const img = `assets/img/covers/${Math.ceil(Math.random() * 40)}_tn.jpg`;
+    const img = `assets/img/covers/${Math.floor(Math.random() * 40)}_tn.jpg`;
     const dialogRef = this.dialog.open(NewProjectComponent,
       { data: { thumbnails: this.getThumbnails(), img: img } });
     dialogRef.afterClosed().pipe(take(1)).
@@ -67,7 +67,7 @@ export class ProjectListComponent implements OnInit {
       });
   }
 
-  launchConfirmDialog(project: Project) {
+  launchDelDialog(project: Project) {
     const dialogRef = this.dialog.open(ConfirmDialogComponent,
       { data: { title: "删除项目", content: "您确定删除该项目吗？" } });
     dialogRef.afterClosed().pipe(take(1)).
@@ -75,6 +75,10 @@ export class ProjectListComponent implements OnInit {
         if (val)
           this.store$.dispatch(new projectActions.ProjectDeleteAction(project))
       });
+  }
+
+  selectProject(project: Project) {
+    this.store$.dispatch(new projectActions.ProjectSelectAction(project));
   }
 
   private getThumbnails(): Observable<string[]> {

@@ -16,7 +16,6 @@ export class TaskListService {
     constructor(private http: HttpClient, @Inject("BASE_CONFIG") private config) { }
 
     add(tasklist: TaskList): Observable<TaskList> {
-        tasklist.id = null;
         const url = `${this.config.uri}/${this.domain}`;
         return this.http.post<TaskList>(url, JSON.stringify(tasklist), { headers: this.headers });
     }
@@ -42,8 +41,8 @@ export class TaskListService {
     swapOrder(src: TaskList, target: TaskList): Observable<TaskList[]> {
         const dragUrl = `${this.config.uri}/${this.domain}/${src.id}`;
         const dropUrl = `${this.config.uri}/${this.domain}/${target.id}`;
-        const drag$ = this.http.patch<TaskList>(dragUrl, JSON.stringify({ order: src.order }), { headers: this.headers });
-        const drop$ = this.http.patch<TaskList>(dropUrl, JSON.stringify({ order: target.order }), { headers: this.headers });
+        const drag$ = this.http.patch<TaskList>(dragUrl, JSON.stringify({ order: target.order }), { headers: this.headers });
+        const drop$ = this.http.patch<TaskList>(dropUrl, JSON.stringify({ order: src.order }), { headers: this.headers });
         return concat(drag$, drop$).pipe(reduce<TaskList>((arrs, list) => [...arrs, list], []));
     }
 }
