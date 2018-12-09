@@ -51,7 +51,7 @@ export function reducer(state = initialState, action: taskAction.TaskActions | p
         case taskAction.TaskActionTypes.TASK_UPDATE_SUCCESS:
             return adapter.updateOne({ id: action.payload.id, changes: action.payload }, state);
         case taskAction.TaskActionTypes.TASK_LOAD_BY_LISTS_SUCCESS:
-            return adapter.addMany(action.payload, state);
+            return adapter.addAll(action.payload, state);
         case taskAction.TaskActionTypes.TASK_MOVE_ALL_SUCCESS:
             return moveAllTask(state, action);
         case projectAction.ProjectActionTypes.PROJECT_DELETE_SUCCESS:

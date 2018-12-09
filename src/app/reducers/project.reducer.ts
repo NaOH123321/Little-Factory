@@ -37,7 +37,7 @@ export function reducer(state = initialState, action: projectAction.ProjectActio
         case projectAction.ProjectActionTypes.PROJECT_UPDATE_SUCCESS:
             return adapter.updateOne({ id: action.payload.id, changes: action.payload }, state);
         case projectAction.ProjectActionTypes.PROJECT_LOAD_SUCCESS:
-            return adapter.addMany(action.payload, state);
+            return adapter.addAll(action.payload, state);
         case projectAction.ProjectActionTypes.PROJECT_SELECT:
             return { ...state, selectedProjectId: action.payload.id }
         default: {

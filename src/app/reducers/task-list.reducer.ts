@@ -49,7 +49,7 @@ export function reducer(state = initialState, action: taskListAction.TaskListAct
         case taskListAction.TaskListActionTypes.TASKLIST_UPDATE_SUCCESS:
             return adapter.updateOne({ id: action.payload.id, changes: action.payload }, state);
         case taskListAction.TaskListActionTypes.TASKLIST_LOAD_SUCCESS:
-            return adapter.addMany(action.payload, state);
+            return adapter.addAll(action.payload, state);
         case taskListAction.TaskListActionTypes.TASKLIST_SWAP_SUCCESS:
             return swapTaskList(state, action);
         case projectAction.ProjectActionTypes.PROJECT_DELETE_SUCCESS:
