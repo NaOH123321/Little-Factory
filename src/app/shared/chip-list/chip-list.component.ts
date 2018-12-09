@@ -19,7 +19,7 @@ export class ChipListComponent implements OnInit, ControlValueAccessor {
   @Input()
   multiple = true;
   @Input()
-  label = "添加/修改成员";  
+  label = "添加/修改成员";
   @Input()
   placeHolderText = "请输入成员 email";
   @Input()
@@ -62,7 +62,7 @@ export class ChipListComponent implements OnInit, ControlValueAccessor {
   registerOnTouched(fn: any): void { }
 
   validate(c: FormControl): { [key: string]: any } {
-    return this.members.length !== 0 ? null : {
+    return this.multiple || this.members.length !== 0 ? null : {
       ChipListInvalid: true
     };
   }

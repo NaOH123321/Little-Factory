@@ -30,12 +30,6 @@ export class ProjectListComponent implements OnInit {
   ngOnInit() {
     this.store$.dispatch(new projectActions.ProjectLoadAction(null));
     this.projects$ = this.store$.pipe(select(fromRoot.getProjectAll));
-
-    // this.sub = this.service$.get("1").subscribe(
-    //   projects => {
-    //     this.projects = projects;
-    //     this.cd.markForCheck();
-    //   });
   }
 
   openNewProjectDialog() {
@@ -51,7 +45,8 @@ export class ProjectListComponent implements OnInit {
       });
   }
 
-  launchInviteDialog() {
+  launchInviteDialog(project: Project) {
+    
     const dialogRef = this.dialog.open(InviteComponent, { data: { members: [] } });
   }
 

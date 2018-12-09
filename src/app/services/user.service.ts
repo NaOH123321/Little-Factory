@@ -22,7 +22,7 @@ export class UserService {
 
     getUserByProject(projectId: string): Observable<User[]> {
         const url = `${this.config.uri}/${this.domain}`;
-        return this.http.get<User[]>(url, { params: { "projectId": projectId } });
+        return this.http.get<User[]>(url, { params: { "projectIds_like": projectId } });
     }
 
     addProjectRef(user: User, projectId: string): Observable<User> {

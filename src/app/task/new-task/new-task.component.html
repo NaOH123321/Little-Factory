@@ -1,27 +1,36 @@
-<form>
+<form [formGroup]="form" (ngSubmit)="onSubmit(form, $event)">
     <h2 mat-dialog-title>{{title}}</h2>
     <div mat-dialog-content>
         <mat-form-field class="full-width">
-            <input matInput type="text" placeholder="任务内容">
+            <input matInput type="text" placeholder="任务内容" formControlName="desc">
         </mat-form-field>
-        <mat-radio-group>
+        <mat-radio-group formControlName="priority">
             <mat-radio-button *ngFor="let priority of priorities" [value]="priority.value">
                 {{priority.label}}
             </mat-radio-button>
         </mat-radio-group>
+        <div class="full-width">
+            <app-chip-list [label]="'更改执行者'" [multiple]="false" formControlName="owner"></app-chip-list>
+        </div>
         <mat-form-field class="full-width">
-            <input matInput [matDatepicker]="dueDatepicker" placeholder="任务截止日期">
+            <input matInput [matDatepicker]="dueDatepicker" placeholder="任务截止日期" formControlName="dueDate">
             <mat-datepicker-toggle matSuffix [for]="dueDatepicker"></mat-datepicker-toggle>
             <mat-datepicker #dueDatepicker></mat-datepicker>
         </mat-form-field>
         <mat-form-field class="full-width">
-            <input matInput [matDatepicker]="reminderDatepicker" placeholder="任务提醒日期">
+            <input matInput [matDatepicker]="reminderDatepicker" placeholder="任务提醒日期" formControlName="reminder">
             <mat-datepicker-toggle matSuffix [for]="reminderDatepicker"></mat-datepicker-toggle>
             <mat-datepicker #reminderDatepicker></mat-datepicker>
         </mat-form-field>
+        <div class="full-width">
+            <app-chip-list [label]="'更改参与者'" formControlName="participants"></app-chip-list>
+        </div>
+        <mat-form-field class="full-width">
+            <textarea matInput type="text" placeholder="备注" formControlName="remark"></textarea>
+        </mat-form-field>
     </div>
     <div mat-dialog-actions>
-        <button mat-raised-button type="button" color="primary" (click)="onSave()">保存</button>
+        <button mat-raised-button type="submit" color="primary" [disabled]="!form.valid">保存</button>
         <button mat-button mat-dialog-close type="button">关闭</button>
     </div>
 </form>

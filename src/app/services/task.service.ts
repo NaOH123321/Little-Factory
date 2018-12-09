@@ -16,9 +16,20 @@ export class TaskService {
     constructor(private http: HttpClient, @Inject("BASE_CONFIG") private config) { }
 
     add(task: Task): Observable<Task> {
-        task.id = null;
         const url = `${this.config.uri}/${this.domain}`;
-        return this.http.post<Task>(url, JSON.stringify(task), { headers: this.headers });
+        const toAdd = {
+            taskListId: task.taskListId,
+            desc: task.desc,
+            completed: task.completed,
+            ownerId: task.ownerId,
+            participantIds: task.participantIds,
+            dueDate: task.dueDate,
+            priority: task.priority,
+            remark: task.remark,
+            reminder: task.reminder,
+            createDate: task.createDate
+        };
+        return this.http.post<Task>(url, JSON.stringify(toAdd), { headers: this.headers });
     }
 
     update(task: Task): Observable<Task> {

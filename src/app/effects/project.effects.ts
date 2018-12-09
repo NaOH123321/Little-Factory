@@ -6,6 +6,8 @@ import * as fromRoot from '../reducers';
 import * as actions from '../actions/project.action';
 import * as routerActions from '../actions/router.action';
 import * as taskListActions from '../actions/task-list.action';
+import * as taskActions from '../actions/task.action';
+import * as userActions from '../actions/user.action';
 import { switchMap, map, catchError, withLatestFrom } from 'rxjs/operators';
 import { Auth, Project, User } from '../domain';
 import { ProjectService } from '../services/project.service';
@@ -40,6 +42,14 @@ export class ProjectEffects {
     );
 
     @Effect()
+    addUsersByProject$: Observable<Action> = this.actions$.pipe(
+        ofType<actions.ProjectAddSuccessAction>(actions.ProjectActionTypes.PROJECT_ADD_SUCCESS),
+        map(action => action.payload),
+        withLatestFrom(this.store$.pipe(select(fromRoot.getAuth))),
+        map(([project, auth]) => new userActions.UserProjectAddAction({ projectId: project.id, user: auth.user }))
+    );
+    
+    @Effect()
     updateProject$: Observable<Action> = this.actions$.pipe(
         ofType<actions.ProjectUpdateAction>(actions.ProjectActionTypes.PROJECT_UPDATE),
         map(action => action.payload),
@@ -64,6 +74,14 @@ export class ProjectEffects {
     );
 
     @Effect()
+    removeUsersByProject$: Observable<Action> = this.actions$.pipe(
+        ofType<actions.ProjectDeleteSuccessAction>(actions.ProjectActionTypes.PROJECT_DELETE_SUCCESS),
+        map(action => action.payload),
+        withLatestFrom(this.store$.pipe(select(fromRoot.getAuth))),
+        map(([project, auth]) => new userActions.UserProjectDeleteAction({ projectId: project.id, user: auth.user }))
+    );
+
+    @Effect()
     selectProject$: Observable<Action> = this.actions$.pipe(
         ofType<actions.ProjectSelectAction>(actions.ProjectActionTypes.PROJECT_SELECT),
         map(action => action.payload),
@@ -78,6 +96,13 @@ export class ProjectEffects {
     );
 
     @Effect()
+    loadUsersByProject$: Observable<Action> = this.actions$.pipe(
+        ofType<actions.ProjectSelectAction>(actions.ProjectActionTypes.PROJECT_SELECT),
+        map(action => action.payload),
+        map(project => new userActions.UserProjectLoadAction(project.id))
+    );
+
+    @Effect()
     inviteProject$: Observable<Action> = this.actions$.pipe(
         ofType<actions.ProjectInviteAction>(actions.ProjectActionTypes.PROJECT_INVITE),
         map(action => action.payload),
@@ -87,6 +112,13 @@ export class ProjectEffects {
                 catchError(err => of(new actions.ProjectInviteFailAction(JSON.stringify(err))))
             )
         )
+    );
+
+    @Effect()
+    updateUsersByProject$: Observable<Action> = this.actions$.pipe(
+        ofType<actions.ProjectInviteSuccessAction>(actions.ProjectActionTypes.PROJECT_INVITE_SUCCESS),
+        map(action => action.payload),
+        map(project => new userActions.UserProjectUpdateAction(project))
     );
     constructor(private actions$: Actions, private store$: Store<fromRoot.State>, private service$: ProjectService) { }
 }

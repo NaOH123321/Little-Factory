@@ -9,17 +9,17 @@ export interface State extends EntityState<TaskList> {
     selectedTaskListId: string | null;
 }
 
-export function selectProjectId(a: TaskList): string {
+function selectTaskListId(a: TaskList): string {
     //In this case this would be optional since primary key is id
     return a.id;
 }
 
-export function sortByOrder(a: TaskList, b: TaskList): number {
+function sortByOrder(a: TaskList, b: TaskList): number {
     return a.order > b.order ? 1 : a.order === b.order ? 0 : -1;
 }
 
 export const adapter: EntityAdapter<TaskList> = createEntityAdapter<TaskList>({
-    selectId: selectProjectId,
+    selectId: selectTaskListId,
     sortComparer: sortByOrder
 });
 

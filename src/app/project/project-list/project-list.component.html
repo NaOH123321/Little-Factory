@@ -1,5 +1,5 @@
 <div class="container">
-    <app-project-item class="card" *ngFor="let project of projects$ | async" [item]="project" (onSelected)="selectProject(project)" (onInvite)="launchInviteDialog()" (onEdit)="launchUpdateDialog(project)" (onDel)="launchDelDialog(project)">
+    <app-project-item class="card" *ngFor="let project of projects$ | async" [item]="project" (onSelected)="selectProject(project)" (onInvite)="launchInviteDialog(project)" (onEdit)="launchUpdateDialog(project)" (onDel)="launchDelDialog(project)">
     </app-project-item>
 </div>
 

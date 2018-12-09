@@ -8,21 +8,29 @@ import * as fromQuote from './quote.reducer';
 import * as fromAuth from './auth.reducer';
 import * as fromProject from './project.reducer';
 import * as fromTaskList from './task-list.reducer';
+import * as fromTask from './task.reducer';
+import * as fromUser from './user.reducer';
 import { environment } from './../../environments/environment';
 import { storeFreeze } from 'ngrx-store-freeze'
+import { TaskVM } from '../vm/task.vm';
+import { TaskListVM } from '../vm/task-list.vm';
 
 export interface State {
     quote: fromQuote.State,
     auth: Auth,
     project: fromProject.State,
-    taskList: fromTaskList.State
+    taskList: fromTaskList.State,
+    task: fromTask.State,
+    user: fromUser.State
 };
 
 const reducers: ActionReducerMap<State> = {
     quote: fromQuote.reducer,
     auth: fromAuth.reducer,
     project: fromProject.reducer,
-    taskList: fromTaskList.reducer
+    taskList: fromTaskList.reducer,
+    task: fromTask.reducer,
+    user: fromUser.reducer
 }
 
 // console.log all actions
@@ -44,6 +52,8 @@ export const getQuoteState = createFeatureSelector<fromQuote.State>('quote');
 export const getAuth = createFeatureSelector<Auth>('auth');
 export const getProjectState = createFeatureSelector<fromProject.State>('project');
 export const getTaskListState = createFeatureSelector<fromTaskList.State>('taskList');
+export const getTaskState = createFeatureSelector<fromTask.State>('task');
+export const getUserState = createFeatureSelector<fromUser.State>('user');
 
 export const getQuote = createSelector(getQuoteState, fromQuote.getQuote);
 
@@ -61,11 +71,44 @@ export const {
     selectTotal: getTaskListTotal,
 } = fromTaskList.adapter.getSelectors(getTaskListState);
 
-export const getTaskListByProject = createSelector(getTaskListAll, fromProject.selectProjectId, (tasks, projectId) => {
-    return tasks.filter(task => task.projectId === projectId);
+export const {
+    selectIds: getTaskIds,
+    selectEntities: getTaskEntities,
+    selectAll: getTaskAll,
+    selectTotal: getTaskTotal,
+} = fromTask.adapter.getSelectors(getTaskState);
+
+export const {
+    selectIds: getUserIds,
+    selectEntities: getUserEntities,
+    selectAll: getUserAll,
+    selectTotal: getUserTotal,
+} = fromUser.adapter.getSelectors(getUserState);
+
+const getSelectedProjectId = createSelector(getProjectState, fromProject.getSelectedId);
+
+const getTaskLists = createSelector(getTaskListAll, getSelectedProjectId, (taskLists, projectId) => {
+    return taskLists.filter(taskList => taskList.projectId === projectId);
 });
 
-const ger = createSelector(getQuoteState, fromQuote.getQuote);
+export const getTasksWithOwners = createSelector(getTaskAll, getUserEntities, (tasks, UserEntities) => {
+    return <TaskVM[]>tasks.map(task => {
+        return {
+            ...task,
+            owner: UserEntities[task.ownerId],
+            participants: task.participantIds !== null && task.participantIds !== undefined ? task.participantIds.map(id => UserEntities[id]) : []
+        }
+    });
+});
+
+export const getTaskListsByProject = createSelector(getTaskLists, getTasksWithOwners, (taskLists, tasks) => {
+    return <TaskListVM[]>taskLists.map(taskList => {
+        return {
+            ...taskList,
+            tasks: tasks.filter(task => task.taskListId === taskList.id)
+        }
+    });
+});
 
 @NgModule({
     imports: [

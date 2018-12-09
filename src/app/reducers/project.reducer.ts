@@ -7,12 +7,12 @@ export interface State extends EntityState<Project> {
     selectedProjectId: string | null;
 }
 
-export function selectProjectId(a: Project): string {
+function selectProjectId(a: Project): string {
     //In this case this would be optional since primary key is id
     return a.id;
 }
 
-export function sortByName(a: Project, b: Project): number {
+function sortByName(a: Project, b: Project): number {
     return a.name.localeCompare(b.name);
 }
 
@@ -45,3 +45,5 @@ export function reducer(state = initialState, action: projectAction.ProjectActio
         }
     }
 }
+
+export const getSelectedId = (state: State) => state.selectedProjectId;

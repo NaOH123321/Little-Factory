@@ -4,6 +4,7 @@ import { Action, Store, select } from '@ngrx/store';
 import { Actions, Effect, ofType } from '@ngrx/effects';
 import * as fromRoot from '../reducers';
 import * as actions from '../actions/task-list.action';
+import * as taskActions from '../actions/task.action';
 import { switchMap, map, catchError } from 'rxjs/operators';
 import { TaskList, Project, User } from '../domain';
 import { TaskListService } from './../services/task-list.service';
@@ -70,5 +71,11 @@ export class TaskListEffects {
         )
     );
 
+    @Effect()
+    loadTasks$: Observable<Action> = this.actions$.pipe(
+        ofType<actions.TaskListLoadSuccessAction>(actions.TaskListActionTypes.TASKLIST_LOAD_SUCCESS),
+        map(action => action.payload),
+        map(taskLists => new taskActions.TaskLoadByListsAction(taskLists))
+    );
     constructor(private actions$: Actions, private store$: Store<fromRoot.State>, private service$: TaskListService) { }
 }
