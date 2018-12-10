@@ -28,13 +28,13 @@ export class ProjectEffects {
         )
     );
 
-    @Effect()
-    toLoadUser$: Observable<Action> = this.actions$.pipe(
-      ofType<actions.ProjectLoadSuccessAction>(actions.ProjectActionTypes.PROJECT_LOAD_SUCCESS),
-      map(action => action.payload),
-      switchMap((prjs: Project[]) => from(prjs.map(prj => prj.id))),
-      map((projectId: string) => new userActions.UserProjectLoadAction(projectId))
-    );
+    // @Effect()
+    // toLoadUser$: Observable<Action> = this.actions$.pipe(
+    //   ofType<actions.ProjectLoadSuccessAction>(actions.ProjectActionTypes.PROJECT_LOAD_SUCCESS),
+    //   map(action => action.payload),
+    //   switchMap((prjs: Project[]) => from(prjs.map(prj => prj.id))),
+    //   map((projectId: string) => new userActions.UserProjectLoadAction(projectId))
+    // );
 
     @Effect()
     addProject$: Observable<Action> = this.actions$.pipe(

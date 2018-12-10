@@ -7,7 +7,11 @@ export function reducer(state = initialState, action: authAction.AuthActions): A
     switch (action.type) {
         case authAction.AuthActionTypes.AUTH_LOGIN_SUCCESS:
         case authAction.AuthActionTypes.AUTH_REGISTER_SUCCESS:
-            return { ...action.payload };
+            const auth = <Auth>action.payload;
+            return {
+                token: auth.token,
+                userId: auth.user ? auth.user.id : undefined
+            };
         case authAction.AuthActionTypes.AUTH_LOGIN_FAIL:
         case authAction.AuthActionTypes.AUTH_REGISTER_FAIL:
             return { err: action.payload };

@@ -26,8 +26,7 @@
       "email": "liming@163.com",
       "id": "3",
       "projectIds": [
-        "1",
-        "2"
+        "1"
       ]
     },
     {
@@ -77,10 +76,17 @@
       "desc": "这是一个企业内部项目",
       "coverImg": "assets/img/covers/1.jpg",
       "members": [
-        "BkkDvwee-",
-        "BkkDvwee-",
-        "3"
+        "BkkDvwee-"
       ]
+    },
+    {
+      "name": "gggggggggg",
+      "desc": "",
+      "coverImg": "assets/img/covers/32.jpg",
+      "members": [
+        "BkkDvwee-"
+      ],
+      "id": "q9X~Tnl"
     }
   ],
   "taskLists": [
