@@ -6,6 +6,9 @@ import { User, Project } from './../domain';
  * enum object for all of this group's action types.
  */
 export enum UserActionTypes {
+    USER_PROJECTS_LOAD = '[User] User Projects Load',
+    USER_PROJECTS_LOAD_SUCCESS = '[User] User Projects Load Success',
+    USER_PROJECTS_LOAD_FAIL = '[User] User Projects Load Fail',
     USER_PROJECT_LOAD = '[User] User Project Load',
     USER_PROJECT_LOAD_SUCCESS = '[User] User Project Load Success',
     USER_PROJECT_LOAD_FAIL = '[User] User Project Load Fail',
@@ -28,6 +31,24 @@ export enum UserActionTypes {
  * payload. Expressing actions as classes enables powerful 
  * type checking in reducer functions.
  */
+export class UserProjectsLoadAction implements Action {
+    readonly type = UserActionTypes.USER_PROJECTS_LOAD;
+
+    constructor(public payload: string[]) { }
+}
+
+export class UserProjectsLoadSuccessAction implements Action {
+    readonly type = UserActionTypes.USER_PROJECTS_LOAD_SUCCESS;
+
+    constructor(public payload: User[]) { }
+}
+
+export class UserProjectsLoadFailAction implements Action {
+    readonly type = UserActionTypes.USER_PROJECTS_LOAD_FAIL;
+
+    constructor(public payload: string) { }
+}
+
 export class UserProjectLoadAction implements Action {
     readonly type = UserActionTypes.USER_PROJECT_LOAD;
 
@@ -85,7 +106,7 @@ export class UserProjectUpdateFailAction implements Action {
 export class UserProjectDeleteAction implements Action {
     readonly type = UserActionTypes.USER_PROJECT_DELETE;
 
-    constructor(public payload: {user: User, projectId: string}) { }
+    constructor(public payload: { user: User, projectId: string }) { }
 }
 
 export class UserProjectDeleteSuccessAction implements Action {
@@ -130,6 +151,9 @@ export type UserActions
     | UserProjectLoadAction
     | UserProjectLoadSuccessAction
     | UserProjectLoadFailAction
+    | UserProjectsLoadAction
+    | UserProjectsLoadSuccessAction
+    | UserProjectsLoadFailAction
     | UserProjectUpdateAction
     | UserProjectUpdateSuccessAction
     | UserProjectUpdateFailAction

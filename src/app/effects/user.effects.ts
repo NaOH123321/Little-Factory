@@ -23,6 +23,18 @@ export class UserEffects {
     );
 
     @Effect()
+    getUserByProjects$: Observable<Action> = this.actions$.pipe(
+        ofType<actions.UserProjectsLoadAction>(actions.UserActionTypes.USER_PROJECTS_LOAD),
+        map(action => action.payload),
+        switchMap(projectIds =>
+            this.service$.getUserByProjects(projectIds).pipe(
+                map(users => new actions.UserProjectsLoadSuccessAction(users)),
+                catchError(err => of(new actions.UserProjectsLoadFailAction(JSON.stringify(err))))
+            )
+        )
+    );
+
+    @Effect()
     getUserByProject$: Observable<Action> = this.actions$.pipe(
         ofType<actions.UserProjectLoadAction>(actions.UserActionTypes.USER_PROJECT_LOAD),
         map(action => action.payload),

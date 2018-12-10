@@ -2,7 +2,8 @@ import { Injectable, Inject } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable, from } from 'rxjs';
 import { Project, User } from './../domain';
-import { mergeMap, count, switchMap, mapTo } from 'rxjs/operators';
+import { mergeMap, count, switchMap, mapTo, take, map, reduce } from 'rxjs/operators';
+import * as _ from 'lodash';
 
 @Injectable({
   providedIn: 'root'
@@ -42,6 +43,27 @@ export class ProjectService {
     );
   }
 
+  // get(userId: string): Observable<Project[]> {
+  //   const url = `${this.config.uri}/users/${userId}`;
+  //   const user$ = this.http.get<User>(url);
+  //   const projectIds: string[] = [];
+  //   user$.pipe(
+  //     map(u => u.projectIds),
+  //     take(1)
+  //   ).subscribe(strs => {
+  //     for (let i = 0; i < strs.length; i++) {
+  //       projectIds.push(strs[i]);
+  //     }
+  //   });
+  //   return from(projectIds).pipe(
+  //     mergeMap(projectId => {
+  //       const tempUrl = `${this.config.uri}/${this.domain}/${projectId}`;
+  //       return this.http.get<Project>(tempUrl);
+  //     }),
+  //     reduce((project: Project[], p: Project) => [...project, p], []),
+  //   );
+  // }
+
   get(userId: string): Observable<Project[]> {
     const url = `${this.config.uri}/${this.domain}`;
     return this.http.get<Project[]>(url, { params: { "members_like": userId } });
@@ -53,9 +75,9 @@ export class ProjectService {
       switchMap(project => {
         const existingMemberIds = project.members;
         const invitedIds = members.map(user => user.id);
-        const newIds = [...existingMemberIds, ...invitedIds];
-        return this.http.patch<Project>(url, JSON.stringify({ members: newIds }), { headers: this.headers });
+        const newIds = _.union(existingMemberIds, invitedIds);
+        return this.http.patch<Project>(url, JSON.stringify({ members: invitedIds }), { headers: this.headers });
       })
-    );
+    ); 
   }
 }

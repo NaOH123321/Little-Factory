@@ -27,28 +27,25 @@ export const initialState: State = adapter.getInitialState({
     selectedUserId: null,
 });
 
-function loadUserByProject(state: State, action: projectAction.ProjectSelectAction) {
-    const project = action.payload;
-    const memberIds = project.members;
-    const deleteIds = (<string[]>state.ids).filter(id => memberIds.indexOf(id) === -1);
-    return adapter.removeMany(deleteIds, state);
-};
-
 function inviteUsers(state: State, action: userAction.UserProjectUpdateSuccessAction) {
     const users = action.payload;
     return adapter.updateMany(users.map((u: User) => ({ id: u.id, changes: u })), state);
 }
 
-export function reducer(state = initialState, action: userAction.UserActions | projectAction.ProjectActions): State {
+export function reducer(state = initialState, action: userAction.UserActions): State {
     switch (action.type) {
+        case userAction.UserActionTypes.USER_PROJECTS_LOAD_SUCCESS:
         case userAction.UserActionTypes.USER_PROJECT_LOAD_SUCCESS:
             return adapter.addAll(action.payload, state);
-        case userAction.UserActionTypes.USER_PROJECT_ADD_SUCCESS:
-            return adapter.addOne(action.payload, state);
-        case userAction.UserActionTypes.USER_PROJECT_DELETE_SUCCESS:
-            return adapter.removeOne(action.payload.id, state);
+        // case userAction.UserActionTypes.USER_PROJECT_ADD_SUCCESS:
+        //     return adapter.addOne(action.payload, state);
+        // case userAction.UserActionTypes.USER_PROJECT_DELETE_SUCCESS:
+        //     return adapter.removeOne(action.payload.id, state);
         case userAction.UserActionTypes.USER_PROJECT_UPDATE_SUCCESS:
             return inviteUsers(state, action);
+        case userAction.UserActionTypes.USER_PROJECT_ADD_SUCCESS:
+        case userAction.UserActionTypes.USER_PROJECT_DELETE_SUCCESS:
+            return adapter.updateOne({ id: action.payload.id, changes: action.payload }, state);
         case userAction.UserActionTypes.USER_SEARCH_SUCCESS:
         default: {
             return state;

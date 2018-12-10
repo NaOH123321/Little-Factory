@@ -1,8 +1,9 @@
 import { Injectable, Inject } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
-import { Observable, from, of } from 'rxjs';
+import { Observable, from, of, combineLatest, merge } from 'rxjs';
 import { User, Project } from './../domain';
-import { filter, reduce, switchMap } from 'rxjs/operators';
+import { filter, reduce, switchMap, mergeMap, distinct, tap, map } from 'rxjs/operators';
+import * as _ from "lodash";
 
 @Injectable({
     providedIn: 'root'
@@ -20,14 +21,23 @@ export class UserService {
         return this.http.get<User[]>(url, { params: { "email_like": filter } });
     }
 
-    getUser(userId: string): Observable<User> {
-        const url = `${this.config.uri}/${this.domain}/${userId}`;
-        return this.http.get<User>(url);
-    }
-
     getUserByProject(projectId: string): Observable<User[]> {
         const url = `${this.config.uri}/${this.domain}`;
         return this.http.get<User[]>(url, { params: { "projectIds_like": projectId } });
+    }
+
+    getUserByProjects(projectIds: string[]): Observable<User[]> {
+        const url = `${this.config.uri}/${this.domain}`;
+        return from(projectIds).pipe(
+            mergeMap(projectId => this.getUserByProject(projectId)),
+            reduce((users: User[], t: User[]) => [...users, ...t], []),
+            switchMap(users =>
+                from(users).pipe(
+                    distinct(u => u.id),
+                    reduce((user: User[], t: User) => [...user, t], []),
+                )
+            )
+        );
     }
 
     addProjectRef(user: User, projectId: string): Observable<User> {
@@ -51,14 +61,16 @@ export class UserService {
     batchUpdateProjectRef(project: Project): Observable<User[]> {
         const projectId = project.id;
         const memberIds = project.members ? project.members : [];
+
         return from(memberIds).pipe(
             switchMap(id => {
                 const url = `${this.config.uri}/${this.domain}/${id}`;
                 return this.http.get<User>(url);
             }),
             filter(user => user.projectIds.indexOf(projectId) === -1),
-            switchMap(u => this.addProjectRef(u, projectId)),
+            switchMap(u => this.removeProjectRef(u, projectId)),
             reduce((acc: User[], curr: User) => [...acc, curr], [])
         );
+
     }
 }

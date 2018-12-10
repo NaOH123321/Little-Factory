@@ -28,13 +28,13 @@ export class ProjectEffects {
         )
     );
 
-    // @Effect()
-    // toLoadUser$: Observable<Action> = this.actions$.pipe(
-    //   ofType<actions.ProjectLoadSuccessAction>(actions.ProjectActionTypes.PROJECT_LOAD_SUCCESS),
-    //   map(action => action.payload),
-    //   switchMap((prjs: Project[]) => from(prjs.map(prj => prj.id))),
-    //   map((projectId: string) => new userActions.UserProjectLoadAction(projectId))
-    // );
+    @Effect()
+    toLoadUser$: Observable<Action> = this.actions$.pipe(
+        ofType<actions.ProjectLoadSuccessAction>(actions.ProjectActionTypes.PROJECT_LOAD_SUCCESS),
+        map(action => action.payload),
+        map(projects => projects.map(prj => prj.id)),
+        map(projectIds => new userActions.UserProjectsLoadAction(projectIds)),
+    );
 
     @Effect()
     addProject$: Observable<Action> = this.actions$.pipe(
@@ -82,15 +82,20 @@ export class ProjectEffects {
         )
     );
 
+    // @Effect()
+    // removeUsersByProject$: Observable<Action> = this.actions$.pipe(
+    //     ofType<actions.ProjectDeleteSuccessAction>(actions.ProjectActionTypes.PROJECT_DELETE_SUCCESS),
+    //     map(action => action.payload),
+    //     withLatestFrom(this.store$.pipe(select(fromRoot.getAuthUser))),
+    //     map(([project, user]) => new userActions.UserProjectDeleteAction({ projectId: project.id, user: user }))
+    // );
+
+    //debug
     @Effect()
     // removeUsersByProject$: Observable<Action> = this.actions$.pipe(
     //     ofType<actions.ProjectDeleteSuccessAction>(actions.ProjectActionTypes.PROJECT_DELETE_SUCCESS),
     //     map(action => action.payload),
-    //     map(project => this.store$.pipe(
-    //         select(fromRoot.getProjectMembers(project.id)),
-    //         take(1)
-    //         )),
-    //     map(([project, user]) => new userActions.UserProjectDeleteAction({ projectId: project.id, user: user }))
+    //     map(project => new userActions.UserProjectUpdateAction({ project: project, oldMemberIds: project.members }))
     // );
 
     @Effect()

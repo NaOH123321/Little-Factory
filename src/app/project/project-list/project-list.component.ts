@@ -48,6 +48,7 @@ export class ProjectListComponent implements OnInit {
   launchInviteDialog(project: Project) {
     this.store$.pipe(
       select(fromRoot.getProjectMembers(project.id)),
+      take(1),
       map(users => this.dialog.open(InviteComponent, { data: { members: users } })),
       switchMap(dialogRef => dialogRef.afterClosed().pipe(take(1)))
     ).
