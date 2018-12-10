@@ -5,7 +5,6 @@ import { Actions, Effect, ofType } from '@ngrx/effects';
 import * as fromRoot from '../reducers';
 import * as actions from '../actions/user.action';
 import { switchMap, map, catchError } from 'rxjs/operators';
-import { User } from '../domain';
 import { UserService } from './../services/user.service';
 
 @Injectable()
@@ -74,9 +73,9 @@ export class UserEffects {
     removeProjectRef$: Observable<Action> = this.actions$.pipe(
         ofType<actions.UserProjectDeleteAction>(actions.UserActionTypes.USER_PROJECT_DELETE),
         map(action => action.payload),
-        switchMap(({ user, projectId }) =>
-            this.service$.removeProjectRef(user, projectId).pipe(
-                map(u => new actions.UserProjectDeleteSuccessAction(u)),
+        switchMap(project =>
+            this.service$.removeProjectRef(project).pipe(
+                map(users => new actions.UserProjectDeleteSuccessAction(users)),
                 catchError(err => of(new actions.UserProjectDeleteFailAction(JSON.stringify(err))))
             )
         )

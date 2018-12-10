@@ -106,13 +106,13 @@ export class UserProjectUpdateFailAction implements Action {
 export class UserProjectDeleteAction implements Action {
     readonly type = UserActionTypes.USER_PROJECT_DELETE;
 
-    constructor(public payload: { user: User, projectId: string }) { }
+    constructor(public payload: Project) { }
 }
 
 export class UserProjectDeleteSuccessAction implements Action {
     readonly type = UserActionTypes.USER_PROJECT_DELETE_SUCCESS;
 
-    constructor(public payload: User) { }
+    constructor(public payload: User[]) { }
 }
 
 export class UserProjectDeleteFailAction implements Action {

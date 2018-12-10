@@ -6,7 +6,6 @@ import * as fromRoot from '../reducers';
 import * as actions from '../actions/project.action';
 import * as routerActions from '../actions/router.action';
 import * as taskListActions from '../actions/task-list.action';
-import * as taskActions from '../actions/task.action';
 import * as userActions from '../actions/user.action';
 import { switchMap, map, catchError, withLatestFrom, take } from 'rxjs/operators';
 import { Auth, Project, User } from '../domain';
@@ -82,21 +81,12 @@ export class ProjectEffects {
         )
     );
 
-    // @Effect()
-    // removeUsersByProject$: Observable<Action> = this.actions$.pipe(
-    //     ofType<actions.ProjectDeleteSuccessAction>(actions.ProjectActionTypes.PROJECT_DELETE_SUCCESS),
-    //     map(action => action.payload),
-    //     withLatestFrom(this.store$.pipe(select(fromRoot.getAuthUser))),
-    //     map(([project, user]) => new userActions.UserProjectDeleteAction({ projectId: project.id, user: user }))
-    // );
-
-    //debug
     @Effect()
-    // removeUsersByProject$: Observable<Action> = this.actions$.pipe(
-    //     ofType<actions.ProjectDeleteSuccessAction>(actions.ProjectActionTypes.PROJECT_DELETE_SUCCESS),
-    //     map(action => action.payload),
-    //     map(project => new userActions.UserProjectUpdateAction({ project: project, oldMemberIds: project.members }))
-    // );
+    removeUsersByProject$: Observable<Action> = this.actions$.pipe(
+        ofType<actions.ProjectDeleteSuccessAction>(actions.ProjectActionTypes.PROJECT_DELETE_SUCCESS),
+        map(action => action.payload),
+        map(project => new userActions.UserProjectDeleteAction(project))
+    );
 
     @Effect()
     selectProject$: Observable<Action> = this.actions$.pipe(
