@@ -13,7 +13,7 @@
 </div>
 <!-- <mat-autocomplete #autoMember="matAutocomplete" [displayWith]="displayUser"> -->
 <mat-autocomplete #autoMember="matAutocomplete">
-    <mat-option *ngFor="let member of memberResult$ | async" [value]="member" (onSelectionChange)="handleMemberSelection(member)">
+    <mat-option *ngFor="let member of memberResult$ | async" [value]="" (onSelectionChange)="handleMemberSelection(member)">
         {{member.name}}
     </mat-option>
 </mat-autocomplete>

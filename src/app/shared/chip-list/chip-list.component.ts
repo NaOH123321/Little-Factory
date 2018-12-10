@@ -2,8 +2,10 @@ import { Component, OnInit, forwardRef, Input } from '@angular/core';
 import { NG_VALUE_ACCESSOR, NG_VALIDATORS, ControlValueAccessor, FormControl, FormBuilder, FormGroup } from '@angular/forms';
 import { User } from './../../domain';
 import { Observable } from 'rxjs';
-import { debounceTime, distinctUntilChanged, filter, switchMap } from 'rxjs/operators';
+import { debounceTime, distinctUntilChanged, filter, switchMap, map, startWith } from 'rxjs/operators';
 import { UserService } from 'src/app/services/user.service';
+import * as fromRoot from '../../reducers';
+import { Store, select } from '@ngrx/store';
 
 @Component({
   selector: 'app-chip-list',
@@ -25,11 +27,13 @@ export class ChipListComponent implements OnInit, ControlValueAccessor {
   @Input()
   removable = true;
 
+  allMembers: User[] = [];
+
   members: User[] = [];
   memberResult$: Observable<User[]>;
   form: FormGroup;
 
-  constructor(private fb: FormBuilder, private service$: UserService) { }
+  constructor(private fb: FormBuilder, private service$: UserService, private store$: Store<fromRoot.State>) { }
 
   private propagateChange = (_: any) => { };
 
@@ -37,11 +41,17 @@ export class ChipListComponent implements OnInit, ControlValueAccessor {
     this.form = this.fb.group({
       memberSearch: ['']
     });
+    this.store$.pipe(select(fromRoot.getUserAll)).subscribe(
+      users => this.allMembers = [...users]
+    );
+
     this.memberResult$ = this.form.get("memberSearch").valueChanges.pipe(
-      debounceTime(300),
-      distinctUntilChanged(),
-      filter(n => n && n.length > 1),
-      switchMap(val => this.service$.search(val))
+      startWith(null),
+      // debounceTime(300),
+      // distinctUntilChanged(),
+      // filter(n => n && n.length > 1),
+      map((val: string | null) => val ? this._filter(val) : this.allMembers.slice()),
+      // switchMap(val => this.service$.search(val))
     );
   }
 
@@ -96,5 +106,10 @@ export class ChipListComponent implements OnInit, ControlValueAccessor {
 
   get displayInput() {
     return this.multiple || this.members.length === 0;
+  }
+
+  private _filter(value: string): User[] {
+    const filterValue = value.toLowerCase();
+    return this.allMembers.filter(user => user.email.indexOf(filterValue) === 0);
   }
 }
