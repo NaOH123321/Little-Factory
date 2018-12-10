@@ -24,6 +24,13 @@ export class TaskListEffects {
     );
 
     @Effect()
+    loadTasks$: Observable<Action> = this.actions$.pipe(
+        ofType<actions.TaskListLoadSuccessAction>(actions.TaskListActionTypes.TASKLIST_LOAD_SUCCESS),
+        map(action => action.payload),
+        map(taskLists => new taskActions.TaskLoadByListsAction(taskLists))
+    );
+    
+    @Effect()
     addTaskList$: Observable<Action> = this.actions$.pipe(
         ofType<actions.TaskListAddAction>(actions.TaskListActionTypes.TASKLIST_ADD),
         map(action => action.payload),
@@ -71,11 +78,5 @@ export class TaskListEffects {
         )
     );
 
-    @Effect()
-    loadTasks$: Observable<Action> = this.actions$.pipe(
-        ofType<actions.TaskListLoadSuccessAction>(actions.TaskListActionTypes.TASKLIST_LOAD_SUCCESS),
-        map(action => action.payload),
-        map(taskLists => new taskActions.TaskLoadByListsAction(taskLists))
-    );
     constructor(private actions$: Actions, private store$: Store<fromRoot.State>, private service$: TaskListService) { }
 }

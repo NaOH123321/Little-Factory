@@ -40,10 +40,7 @@ export class TaskHomeComponent implements OnInit {
   }
 
   launchNewTaskDialog(list: TaskListVM) {
-    const user$ = this.store$.pipe(
-      select(fromRoot.getAuth),
-      map(auth => auth.user)
-    );
+    const user$ = this.store$.pipe(select(fromRoot.getAuthUser));
     user$.pipe(
       take(1),
       map(user => this.dialog.open(NewTaskComponent, { data: { title: "新建任务", owner: user } })),
@@ -134,13 +131,13 @@ export class TaskHomeComponent implements OnInit {
   handleQuickTask(desc: string, list: TaskListVM) {
     const user$ = this.store$.pipe(
       select(fromRoot.getAuth),
-      map(auth => auth.user)
+      map(auth => auth.userId)
     );
-    user$.pipe(take(1)).subscribe(user =>
+    user$.pipe(take(1)).subscribe(userId =>
       this.store$.dispatch(new taskActions.TaskAddAction({
         desc: desc,
         priority: 3,
-        ownerId: user.id,
+        ownerId: userId,
         taskListId: list.id,
         completed: false,
         participantIds: [],

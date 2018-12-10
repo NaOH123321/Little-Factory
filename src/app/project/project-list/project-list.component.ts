@@ -6,7 +6,7 @@ import { ConfirmDialogComponent } from 'src/app/shared/confirm-dialog/confirm-di
 import { slideToRight } from './../../anim/router.anim';
 import { range, Observable } from 'rxjs';
 import { map, reduce, switchMap, take } from 'rxjs/operators';
-import { Project } from '../../domain';
+import { Project, User } from '../../domain';
 import * as fromRoot from '../../reducers';
 import * as projectActions from './../../actions/project.action';
 import { Store, select } from '@ngrx/store';
@@ -46,8 +46,16 @@ export class ProjectListComponent implements OnInit {
   }
 
   launchInviteDialog(project: Project) {
-    
-    const dialogRef = this.dialog.open(InviteComponent, { data: { members: [] } });
+    this.store$.pipe(
+      select(fromRoot.getProjectMembers(project.id)),
+      map(users => this.dialog.open(InviteComponent, { data: { members: users } })),
+      switchMap(dialogRef => dialogRef.afterClosed().pipe(take(1)))
+    ).
+      subscribe(val => {
+        if (val) {
+          this.store$.dispatch(new projectActions.ProjectInviteAction({ projectId: project.id, members: <User[]>val }));
+        }
+      });
   }
 
   launchUpdateDialog(project: Project) {

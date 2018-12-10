@@ -20,6 +20,11 @@ export class UserService {
         return this.http.get<User[]>(url, { params: { "email_like": filter } });
     }
 
+    getUser(userId: string): Observable<User> {
+        const url = `${this.config.uri}/${this.domain}/${userId}`;
+        return this.http.get<User>(url);
+    }
+
     getUserByProject(projectId: string): Observable<User[]> {
         const url = `${this.config.uri}/${this.domain}`;
         return this.http.get<User[]>(url, { params: { "projectIds_like": projectId } });
@@ -39,7 +44,7 @@ export class UserService {
         const index = projectIds.indexOf(projectId);
         if (index === -1)
             return of(user);
-        const toUpdate = [...projectIds.slice(0, index), ...projectIds.slice(index + 1)];
+        const toUpdate = projectIds.splice(index, 1);
         return this.http.patch<User>(url, JSON.stringify({ projectIds: toUpdate }), { headers: this.headers });
     }
 

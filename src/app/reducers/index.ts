@@ -85,18 +85,30 @@ export const {
     selectTotal: getUserTotal,
 } = fromUser.adapter.getSelectors(getUserState);
 
+export const getAuthUser = createSelector(getAuth, getUserEntities, (auth, userEntities) => {
+    return userEntities[auth.userId];
+});
+
+export const getProjectMembers = (projectId: string) => createSelector(getProjectState, getUserEntities, (state, entities) => {
+    const prj = state.entities[projectId];
+    if (!prj || !prj.members) {
+        return [];
+    }
+    return prj.members.map((id: string) => entities[id]);
+});
+
 const getSelectedProjectId = createSelector(getProjectState, fromProject.getSelectedId);
 
 const getTaskLists = createSelector(getTaskListAll, getSelectedProjectId, (taskLists, projectId) => {
     return taskLists.filter(taskList => taskList.projectId === projectId);
 });
 
-export const getTasksWithOwners = createSelector(getTaskAll, getUserEntities, (tasks, UserEntities) => {
+export const getTasksWithOwners = createSelector(getTaskAll, getUserEntities, (tasks, userEntities) => {
     return <TaskVM[]>tasks.map(task => {
         return {
             ...task,
-            owner: UserEntities[task.ownerId],
-            participants: task.participantIds !== null && task.participantIds !== undefined ? task.participantIds.map(id => UserEntities[id]) : []
+            owner: userEntities[task.ownerId],
+            participants: task.participantIds !== null && task.participantIds !== undefined ? task.participantIds.map(id => userEntities[id]) : []
         }
     });
 });
