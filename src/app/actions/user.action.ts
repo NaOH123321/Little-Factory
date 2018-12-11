@@ -6,12 +6,15 @@ import { User, Project } from './../domain';
  * enum object for all of this group's action types.
  */
 export enum UserActionTypes {
-    USER_PROJECTS_LOAD = '[User] User Projects Load',
-    USER_PROJECTS_LOAD_SUCCESS = '[User] User Projects Load Success',
-    USER_PROJECTS_LOAD_FAIL = '[User] User Projects Load Fail',
-    USER_PROJECT_LOAD = '[User] User Project Load',
-    USER_PROJECT_LOAD_SUCCESS = '[User] User Project Load Success',
-    USER_PROJECT_LOAD_FAIL = '[User] User Project Load Fail',
+    // USER_PROJECTS_LOAD = '[User] User Projects Load',
+    // USER_PROJECTS_LOAD_SUCCESS = '[User] User Projects Load Success',
+    // USER_PROJECTS_LOAD_FAIL = '[User] User Projects Load Fail',
+    // USER_PROJECT_LOAD = '[User] User Project Load',
+    // USER_PROJECT_LOAD_SUCCESS = '[User] User Project Load Success',
+    // USER_PROJECT_LOAD_FAIL = '[User] User Project Load Fail',
+    USERS_LOAD = '[User] Users Load',
+    USERS_LOAD_SUCCESS = '[User] Users Load Success',
+    USERS_LOAD_FAIL = '[User] Users Load Fail',
     USER_PROJECT_ADD = '[User] User Project Add',
     USER_PROJECT_ADD_SUCCESS = '[User] User Project Add Success',
     USER_PROJECT_ADD_FAIL = '[User] User Project Add Fail',
@@ -31,38 +34,56 @@ export enum UserActionTypes {
  * payload. Expressing actions as classes enables powerful 
  * type checking in reducer functions.
  */
-export class UserProjectsLoadAction implements Action {
-    readonly type = UserActionTypes.USER_PROJECTS_LOAD;
+// export class UserProjectsLoadAction implements Action {
+//     readonly type = UserActionTypes.USER_PROJECTS_LOAD;
 
-    constructor(public payload: string[]) { }
+//     constructor(public payload: string[]) { }
+// }
+
+// export class UserProjectsLoadSuccessAction implements Action {
+//     readonly type = UserActionTypes.USER_PROJECTS_LOAD_SUCCESS;
+
+//     constructor(public payload: User[]) { }
+// }
+
+// export class UserProjectsLoadFailAction implements Action {
+//     readonly type = UserActionTypes.USER_PROJECTS_LOAD_FAIL;
+
+//     constructor(public payload: string) { }
+// }
+
+// export class UserProjectLoadAction implements Action {
+//     readonly type = UserActionTypes.USER_PROJECT_LOAD;
+
+//     constructor(public payload: string) { }
+// }
+
+// export class UserProjectLoadSuccessAction implements Action {
+//     readonly type = UserActionTypes.USER_PROJECT_LOAD_SUCCESS;
+
+//     constructor(public payload: User[]) { }
+// }
+
+// export class UserProjectLoadFailAction implements Action {
+//     readonly type = UserActionTypes.USER_PROJECT_LOAD_FAIL;
+
+//     constructor(public payload: string) { }
+// }
+
+export class UsersLoadAction implements Action {
+    readonly type = UserActionTypes.USERS_LOAD;
+
+    constructor(public payload: null) { }
 }
 
-export class UserProjectsLoadSuccessAction implements Action {
-    readonly type = UserActionTypes.USER_PROJECTS_LOAD_SUCCESS;
+export class UsersLoadSuccessAction implements Action {
+    readonly type = UserActionTypes.USERS_LOAD_SUCCESS;
 
     constructor(public payload: User[]) { }
 }
 
-export class UserProjectsLoadFailAction implements Action {
-    readonly type = UserActionTypes.USER_PROJECTS_LOAD_FAIL;
-
-    constructor(public payload: string) { }
-}
-
-export class UserProjectLoadAction implements Action {
-    readonly type = UserActionTypes.USER_PROJECT_LOAD;
-
-    constructor(public payload: string) { }
-}
-
-export class UserProjectLoadSuccessAction implements Action {
-    readonly type = UserActionTypes.USER_PROJECT_LOAD_SUCCESS;
-
-    constructor(public payload: User[]) { }
-}
-
-export class UserProjectLoadFailAction implements Action {
-    readonly type = UserActionTypes.USER_PROJECT_LOAD_FAIL;
+export class UsersLoadFailAction implements Action {
+    readonly type = UserActionTypes.USERS_LOAD_FAIL;
 
     constructor(public payload: string) { }
 }
@@ -148,12 +169,15 @@ export type UserActions
     = UserProjectAddAction
     | UserProjectAddSuccessAction
     | UserProjectAddFailAction
-    | UserProjectLoadAction
-    | UserProjectLoadSuccessAction
-    | UserProjectLoadFailAction
-    | UserProjectsLoadAction
-    | UserProjectsLoadSuccessAction
-    | UserProjectsLoadFailAction
+    // | UserProjectLoadAction
+    // | UserProjectLoadSuccessAction
+    // | UserProjectLoadFailAction
+    // | UserProjectsLoadAction
+    // | UserProjectsLoadSuccessAction
+    // | UserProjectsLoadFailAction
+    | UsersLoadAction
+    | UsersLoadSuccessAction
+    | UsersLoadFailAction
     | UserProjectUpdateAction
     | UserProjectUpdateSuccessAction
     | UserProjectUpdateFailAction

@@ -10,7 +10,7 @@ export function reducer(state = initialState, action: authAction.AuthActions): A
             const auth = <Auth>action.payload;
             return {
                 token: auth.token,
-                userId: auth.user ? auth.user.id : undefined
+                userId: auth.userId ? auth.userId : undefined
             };
         case authAction.AuthActionTypes.AUTH_LOGIN_FAIL:
         case authAction.AuthActionTypes.AUTH_REGISTER_FAIL:

@@ -4,7 +4,7 @@ import * as userAction from '../actions/user.action';
 
 export interface State extends EntityState<User> {
     // additional entities state properties
-    selectedUserId: string | null;
+    // selectedUserId: string | null;
 }
 
 function selectUserId(a: User): string {
@@ -23,14 +23,16 @@ export const adapter: EntityAdapter<User> = createEntityAdapter<User>({
 
 export const initialState: State = adapter.getInitialState({
     // additional entity state properties
-    selectedUserId: null,
+    // selectedUserId: null,
 });
 
 export function reducer(state = initialState, action: userAction.UserActions): State {
     switch (action.type) {
+
         case userAction.UserActionTypes.USER_SEARCH_SUCCESS:
-        case userAction.UserActionTypes.USER_PROJECTS_LOAD_SUCCESS:
-        case userAction.UserActionTypes.USER_PROJECT_LOAD_SUCCESS:
+        // case userAction.UserActionTypes.USER_PROJECTS_LOAD_SUCCESS:
+        // case userAction.UserActionTypes.USER_PROJECT_LOAD_SUCCESS:
+        case userAction.UserActionTypes.USERS_LOAD_SUCCESS:
             return adapter.addAll(action.payload, state);
         case userAction.UserActionTypes.USER_PROJECT_DELETE_SUCCESS:
         case userAction.UserActionTypes.USER_PROJECT_UPDATE_SUCCESS:

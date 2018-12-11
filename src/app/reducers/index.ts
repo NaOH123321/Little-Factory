@@ -4,6 +4,7 @@ import { StoreRouterConnectingModule } from '@ngrx/router-store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 
 import { Auth } from './../domain';
+import * as authActions from '../actions/auth.action';
 import * as fromQuote from './quote.reducer';
 import * as fromAuth from './auth.reducer';
 import * as fromProject from './project.reducer';
@@ -43,10 +44,19 @@ export function logger(reducer: ActionReducer<State>): ActionReducer<State> {
     };
 }
 
+export function storeLoginGuard(reducer: ActionReducer<State>): ActionReducer<State> {
+    return function (state, action) {
+        if (action.type === authActions.AuthActionTypes.AUTH_LOGOUT)
+            return reducer(undefined, action);
+        return reducer(state, action);
+    };
+}
+
 export const metaReducers: MetaReducer<State>[] = !environment.production ? [
     logger,
-    storeFreeze
-] : [];
+    storeFreeze,
+    storeLoginGuard
+] : [storeLoginGuard];
 
 export const getQuoteState = createFeatureSelector<fromQuote.State>('quote');
 export const getAuth = createFeatureSelector<Auth>('auth');

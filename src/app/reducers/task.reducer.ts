@@ -5,7 +5,7 @@ import * as projectAction from '../actions/project.action';
 
 export interface State extends EntityState<Task> {
     // additional entities state properties
-    selectedTaskId: string | null;
+    // selectedTaskId: string | null;
 }
 
 function selectTaskId(a: Task): string {
@@ -24,7 +24,7 @@ export const adapter: EntityAdapter<Task> = createEntityAdapter<Task>({
 
 export const initialState: State = adapter.getInitialState({
     // additional entity state properties
-    selectedTaskId: null,
+    // selectedTaskId: null,
 });
 
 function moveAllTask(state: State, action: taskAction.TaskMoveAllSuccessAction) {

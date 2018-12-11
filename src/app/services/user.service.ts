@@ -4,7 +4,7 @@ import { Observable, from, of } from 'rxjs';
 import { User, Project } from './../domain';
 import { filter, reduce, switchMap, mergeMap, distinct, tap, map } from 'rxjs/operators';
 import { debug } from '../utils/debug.util';
-import * as _ from "lodash";
+// import * as _ from "lodash";
 
 @Injectable({
     providedIn: 'root'

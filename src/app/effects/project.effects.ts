@@ -32,7 +32,7 @@ export class ProjectEffects {
         ofType<actions.ProjectLoadSuccessAction>(actions.ProjectActionTypes.PROJECT_LOAD_SUCCESS),
         map(action => action.payload),
         map(projects => projects.map(prj => prj.id)),
-        map(projectIds => new userActions.UserProjectsLoadAction(projectIds)),
+        map(projectIds => new userActions.UsersLoadAction(null)),
     );
 
     @Effect()
@@ -102,12 +102,12 @@ export class ProjectEffects {
         map(project => new taskListActions.TaskListLoadAction(project.id))
     );
 
-    @Effect()
-    loadUsersByProject$: Observable<Action> = this.actions$.pipe(
-        ofType<actions.ProjectSelectAction>(actions.ProjectActionTypes.PROJECT_SELECT),
-        map(action => action.payload),
-        map(project => new userActions.UserProjectLoadAction(project.id))
-    );
+    // @Effect()
+    // loadUsersByProject$: Observable<Action> = this.actions$.pipe(
+    //     ofType<actions.ProjectSelectAction>(actions.ProjectActionTypes.PROJECT_SELECT),
+    //     map(action => action.payload),
+    //     map(project => new userActions.UserProjectLoadAction(project.id))
+    // );
 
     @Effect()
     inviteProject$: Observable<Action> = this.actions$.pipe(

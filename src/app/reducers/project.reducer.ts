@@ -30,14 +30,14 @@ export const initialState: State = adapter.getInitialState({
 export function reducer(state = initialState, action: projectAction.ProjectActions): State {
     switch (action.type) {
         case projectAction.ProjectActionTypes.PROJECT_ADD_SUCCESS:
-            return adapter.addOne(action.payload, state);
+            return { ...adapter.addOne(action.payload, state), selectedProjectId: null };
         case projectAction.ProjectActionTypes.PROJECT_DELETE_SUCCESS:
-            return adapter.removeOne(action.payload.id, state);
+            return { ...adapter.removeOne(action.payload.id, state), selectedProjectId: null };
         case projectAction.ProjectActionTypes.PROJECT_INVITE_SUCCESS:
         case projectAction.ProjectActionTypes.PROJECT_UPDATE_SUCCESS:
-            return adapter.updateOne({ id: action.payload.id, changes: action.payload }, state);
+            return { ...adapter.updateOne({ id: action.payload.id, changes: action.payload }, state), selectedProjectId: null };
         case projectAction.ProjectActionTypes.PROJECT_LOAD_SUCCESS:
-            return adapter.addAll(action.payload, state);
+            return { ...adapter.addAll(action.payload, state), selectedProjectId: null };
         case projectAction.ProjectActionTypes.PROJECT_SELECT:
             return { ...state, selectedProjectId: action.payload.id }
         default: {

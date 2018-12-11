@@ -6,7 +6,7 @@ import * as projectAction from '../actions/project.action';
 
 export interface State extends EntityState<TaskList> {
     // additional entities state properties
-    selectedTaskListId: string | null;
+    // selectedTaskListId: string | null;
 }
 
 function selectTaskListId(a: TaskList): string {
@@ -25,7 +25,7 @@ export const adapter: EntityAdapter<TaskList> = createEntityAdapter<TaskList>({
 
 export const initialState: State = adapter.getInitialState({
     // additional entity state properties
-    selectedTaskListId: null,
+    // selectedTaskListId: null,
 });
 
 function swapTaskList(state: State, action: taskListAction.TaskListSwapSuccessAction) {

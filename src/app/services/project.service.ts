@@ -3,7 +3,7 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable, from } from 'rxjs';
 import { Project, User } from './../domain';
 import { mergeMap, count, switchMap, mapTo, take, map, reduce } from 'rxjs/operators';
-import * as _ from 'lodash';
+// import * as _ from 'lodash';
 
 @Injectable({
   providedIn: 'root'
@@ -75,7 +75,7 @@ export class ProjectService {
       switchMap(project => {
         const existingMemberIds = project.members;
         const invitedIds = members.map(user => user.id);
-        const newIds = _.union(existingMemberIds, invitedIds);
+        // const newIds = _.union(existingMemberIds, invitedIds);
         return this.http.patch<Project>(url, JSON.stringify({ members: invitedIds }), { headers: this.headers });
       })
     ); 
