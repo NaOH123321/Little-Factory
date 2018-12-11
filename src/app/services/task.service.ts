@@ -80,4 +80,9 @@ export class TaskService {
             reduce((arr: Task[], x: Task) => [...arr, x], [])
         );
     }
+
+    getAllTasks(userId: string): Observable<Task[]> {
+        const url = `${this.config.uri}/${this.domain}`;
+        return this.http.get<Task[]>(url, { params: { "ownerId": userId } });
+    }
 }

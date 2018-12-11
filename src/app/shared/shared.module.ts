@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core'
-import { CommonModule } from '@angular/common';
+import { CommonModule, registerLocaleData } from '@angular/common';
 import { MatToolbarModule, MatIconModule, MatButtonModule, MatCardModule, MatListModule, MatSlideToggleModule, MatInputModule, MatGridListModule, MatDialogModule, MatAutocompleteModule, MatMenuModule, MatCheckboxModule, MatTooltipModule, MatRadioModule, MatDatepickerModule, MatNativeDateModule, MatSelectModule, MatSidenavModule, MatButtonToggleModule, MAT_DATE_LOCALE, MatChipsModule, MatTabsModule } from '@angular/material';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DirectiveModule } from '../directive/directive.module';
@@ -83,9 +83,6 @@ import { IdentityInputComponent } from './identity-input/identity-input.componen
   ],
   entryComponents: [
     ConfirmDialogComponent
-  ],
-  providers: [
-    { provide: MAT_DATE_LOCALE, useValue: 'zh-Hans' }
   ]
 })
 export class SharedModule { }

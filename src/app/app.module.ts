@@ -7,8 +7,9 @@ import { AppComponent } from './app.component';
 import { CoreModule } from './core/core.module';
 import { LoginModule } from './login/login.module';
 import { ProjectModule } from './project/project.module';
-import { TaskModule } from './task/task.module';
+import { TaskModule } from './task';
 import { SharedModule } from './shared/shared.module';
+import { MyCalendarModule } from './my-calendar';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { SharedModule } from './shared/shared.module';
     SharedModule,
     LoginModule,
     ProjectModule,
-    TaskModule
+    TaskModule,
+    MyCalendarModule
   ],
   providers: [],
   bootstrap: [AppComponent]

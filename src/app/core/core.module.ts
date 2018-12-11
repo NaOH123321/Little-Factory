@@ -5,13 +5,17 @@ import { FooterComponent } from './footer/footer.component';
 import { DomSanitizer } from '@angular/platform-browser';
 import { loadSvgResources } from '../utils/svg.util';
 import { HttpClientModule } from '@angular/common/http';
-import { MatIconRegistry } from '@angular/material';
+import { MatIconRegistry, MAT_DATE_LOCALE } from '@angular/material';
 import { SharedModule } from '../shared/shared.module';
 import { AppRoutingModule } from '../app-routing.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppStoreModule } from './../reducers/index';
 import { AppEffectsModule } from '../effects';
+import { registerLocaleData } from '@angular/common';
 import "hammerjs"
+
+import localeZh from '@angular/common/locales/zh';
+registerLocaleData(localeZh);
 
 @NgModule({
   declarations: [
@@ -38,7 +42,8 @@ import "hammerjs"
       provide: "BASE_CONFIG", useValue: {
         uri: "http://localhost:3000"
       }
-    }
+    },
+    { provide: MAT_DATE_LOCALE, useValue: 'zh-Hans' }
   ]
 })
 export class CoreModule {

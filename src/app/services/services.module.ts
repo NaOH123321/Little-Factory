@@ -1,9 +1,10 @@
 import { QuoteService } from './quote.service';
 import { NgModule } from '@angular/core';
+import { AuthGuardService } from './auth-guard.service';
 
 @NgModule({
   providers: [
-    // QuoteService
+    AuthGuardService
   ]
 })
 export class ServicesModule { }
