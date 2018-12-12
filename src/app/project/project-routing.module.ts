@@ -4,7 +4,8 @@ import { ProjectListComponent } from './project-list/project-list.component';
 import { AuthGuardService } from '../services/auth-guard.service';
 
 const routes: Routes = [
-    { path: "projects", component: ProjectListComponent, canActivate: [AuthGuardService] }
+    // { path: "projects", component: ProjectListComponent, canActivate: [AuthGuardService] },
+    { path: "", component: ProjectListComponent }
 ];
 
 @NgModule({

@@ -17,3 +17,7 @@
     bottom: 96px;
     z-index: 998;
 }
+
+:host {
+    overflow: auto;
+}

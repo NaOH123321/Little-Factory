@@ -9,19 +9,21 @@ import { SharedModule } from './shared/shared.module';
 import { MyCalendarModule } from './my-calendar';
 
 @NgModule({
-  declarations: [
-    AppComponent
-  ],
-  imports: [
-    BrowserModule,
-    CoreModule,
-    SharedModule,
-    LoginModule,
-    ProjectModule,
-    TaskModule,
-    MyCalendarModule
-  ],
-  providers: [],
-  bootstrap: [AppComponent]
+   declarations: [
+      AppComponent
+   ],
+   imports: [
+      BrowserModule,
+      CoreModule,
+      SharedModule,
+      LoginModule,
+      //ProjectModule,
+      //TaskModule,
+      //MyCalendarModule
+   ],
+   providers: [],
+   bootstrap: [
+      AppComponent
+   ]
 })
 export class AppModule { }

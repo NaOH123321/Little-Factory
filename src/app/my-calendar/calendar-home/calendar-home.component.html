@@ -1,18 +1,18 @@
 <mat-card>
     <div class="toolbar">
-        <button mat-icon-button mwlCalendarPreviousView [view]="view$ | async" [(viewDate)]="viewDate">
+        <button mat-icon-button mwlCalendarPreviousView [view]="view$ | async" [(viewDate)]="viewDate" (viewDateChange)="activeDayIsOpen=false">
             <mat-icon class="md-48">chevron_left</mat-icon>
           </button>
         <button mat-button mwlCalendarToday [(viewDate)]="viewDate">
             {{viewDate | date:"yyyy-MM-dd"}}
         </button>
-        <button mat-icon-button mwlCalendarNextView [view]="view$ | async" [(viewDate)]="viewDate">
+        <button mat-icon-button mwlCalendarNextView [view]="view$ | async" [(viewDate)]="viewDate" (viewDateChange)="activeDayIsOpen=false">
         <mat-icon class="md-48">chevron_right</mat-icon>
       </button>
     </div>
     <ng-container *ngIf="(event$ | async) as calEvents">
         <div [ngSwitch]="view$ | async">
-            <mwl-calendar-month-view *ngSwitchCase="'month'" [locale]="'zh'" [viewDate]="viewDate" [events]="calEvents" (eventClicked)="handleEvent($event.event)">
+            <mwl-calendar-month-view *ngSwitchCase="'month'" [locale]="'zh'" [viewDate]="viewDate" [activeDayIsOpen]="activeDayIsOpen" (dayClicked)="dayClicked($event.day)" [events]="calEvents" (eventClicked)="handleEvent($event.event)">
             </mwl-calendar-month-view>
             <mwl-calendar-week-view *ngSwitchCase="'week'" [locale]="'zh'" [viewDate]="viewDate" [events]="calEvents" (eventClicked)="handleEvent($event.event)">
             </mwl-calendar-week-view>

@@ -21,10 +21,17 @@
                     <app-image-list-select [useSvgIcon]="true" [title]="'选择头像：'" [cols]=6 [items]="items" formControlName="avatar"></app-image-list-select>
                     <button mat-raised-button type="submit" color="primary" [disabled]="!form.valid">注册</button>
                 </mat-card-content>
-                <mat-card-actions class="text-right">
+                <div class="full-width" style="display: flex;flex-direction: row">
+                    <span class="fill-remaining-space"></span>
+                    <span>
+                        <p>还没有账户？<a routerLink="/login">登录</a></p>
+                        <p>忘记密码？<a routerLink="/forgot">找回</a></p>
+                    </span>
+                </div>
+                <!-- <mat-card-actions class="text-right">
                     <p>还没有账户？<a routerLink="/login">登录</a></p>
                     <p>忘记密码？<a routerLink="/forgot">找回</a></p>
-                </mat-card-actions>
+                </mat-card-actions> -->
             </mat-tab>
             <mat-tab label="个人信息">
                 <div class="full-width">

@@ -6,7 +6,7 @@ import { map, switchMap } from 'rxjs/operators';
 import { TaskService } from 'src/app/services/task.service';
 import { Store, select } from '@ngrx/store';
 import * as fromRoot from '../../reducers';
-import { startOfDay, endOfDay } from 'date-fns';
+import { startOfDay, endOfDay, isSameMonth, isSameDay } from 'date-fns';
 import { debug } from 'src/app/utils/debug.util';
 
 const colors: any = {
@@ -54,6 +54,8 @@ export class CalendarHomeComponent implements OnInit {
   view$: Observable<string>;
   event$: Observable<CalendarEvent[]>;
 
+  activeDayIsOpen: boolean = true;
+
   constructor(private route: ActivatedRoute, private store$: Store<fromRoot.State>, private service$: TaskService) { }
 
   ngOnInit() {
@@ -69,6 +71,20 @@ export class CalendarHomeComponent implements OnInit {
         color: getColor(task.priority)
       })))
     );
+  }
+
+  dayClicked({ date, events }: { date: Date; events: CalendarEvent[] }): void {
+    if (isSameMonth(date, this.viewDate)) {
+      this.viewDate = date;
+      if (
+        (isSameDay(this.viewDate, date) && this.activeDayIsOpen === true) ||
+        events.length === 0
+      ) {
+        this.activeDayIsOpen = false;
+      } else {
+        this.activeDayIsOpen = true;
+      }
+    }
   }
 
   handleEvent(event: CalendarEvent): void {

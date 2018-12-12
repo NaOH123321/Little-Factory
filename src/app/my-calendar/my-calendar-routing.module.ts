@@ -4,8 +4,8 @@ import { Routes, RouterModule } from '@angular/router';
 import { CalendarHomeComponent } from './calendar-home/calendar-home.component';
 
 const routes: Routes = [
-    // { path: "", component: CalendarHomeComponent },
-    { path: "mycal/:view", component: CalendarHomeComponent, canActivate: [AuthGuardService] },
+    { path: "", component: CalendarHomeComponent },
+    // { path: "mycal/:view", component: CalendarHomeComponent, canActivate: [AuthGuardService] },
 ];
 
 @NgModule({
