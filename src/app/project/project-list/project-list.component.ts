@@ -77,7 +77,7 @@ export class ProjectListComponent implements OnInit {
     dialogRef.afterClosed().pipe(take(1)).
       subscribe(val => {
         if (val)
-          this.store$.dispatch(new projectActions.ProjectDeleteAction(project))
+          this.store$.dispatch(new projectActions.ProjectDeleteAction(project));
       });
   }
 

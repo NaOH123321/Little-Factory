@@ -1,4 +1,4 @@
-import { EntityAdapter, EntityState, createEntityAdapter } from "@ngrx/entity"
+import { EntityAdapter, EntityState, createEntityAdapter } from "@ngrx/entity";
 import { Project } from './../domain';
 import * as projectAction from '../actions/project.action';
 
@@ -39,7 +39,7 @@ export function reducer(state = initialState, action: projectAction.ProjectActio
         case projectAction.ProjectActionTypes.PROJECT_LOAD_SUCCESS:
             return { ...adapter.addAll(action.payload, state), selectedProjectId: null };
         case projectAction.ProjectActionTypes.PROJECT_SELECT:
-            return { ...state, selectedProjectId: action.payload.id }
+            return { ...state, selectedProjectId: action.payload.id };
         default: {
             return state;
         }

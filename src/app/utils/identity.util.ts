@@ -8,11 +8,11 @@ export const extractInfo = (idNo: string) => {
         addrCode: addrPart,
         dateOfBirth: birthPart,
         gender: genderPart % 2 !== 0
-    }
-}
+    };
+};
 
 export function isValidAddr(code: string) {
-    return GB2260[code] != undefined;
+    return GB2260[code] !== undefined;
 }
 
 export const getAddrByCode = (code: string) => {
@@ -23,5 +23,5 @@ export const getAddrByCode = (code: string) => {
         province: province,
         city: city,
         district: district
-    }
-}
+    };
+};

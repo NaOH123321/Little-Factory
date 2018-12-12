@@ -3,7 +3,7 @@ import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot } from "@angul
 import { Observable } from "rxjs";
 import { Store, select } from "@ngrx/store";
 import { map, defaultIfEmpty } from "rxjs/operators";
-import * as fromRoot from '../reducers'
+import * as fromRoot from '../reducers';
 import * as routerActions from './../actions/router.action';
 import { debug } from "../utils/debug.util";
 

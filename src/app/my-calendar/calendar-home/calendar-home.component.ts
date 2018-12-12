@@ -33,7 +33,7 @@ const getColor = (priority: number) => {
     default:
       return colors.yellow;
   }
-}
+};
 
 @Component({
   selector: 'app-calendar-home',
@@ -54,7 +54,7 @@ export class CalendarHomeComponent implements OnInit {
   view$: Observable<string>;
   event$: Observable<CalendarEvent[]>;
 
-  activeDayIsOpen: boolean = true;
+  activeDayIsOpen = true;
 
   constructor(private route: ActivatedRoute, private store$: Store<fromRoot.State>, private service$: TaskService) { }
 

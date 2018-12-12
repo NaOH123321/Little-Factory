@@ -88,7 +88,7 @@ export class TaskEffects {
         map(action => action.payload),
         switchMap(task =>
             this.service$.complete(task).pipe(
-                map(task => new actions.TaskCompleteSuccessAction(task)),
+                map(t => new actions.TaskCompleteSuccessAction(t)),
                 catchError(err => of(new actions.TaskCompleteFailAction(JSON.stringify(err))))
             )
         )

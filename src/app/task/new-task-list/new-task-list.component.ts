@@ -19,8 +19,7 @@ export class NewTaskListComponent implements OnInit {
     this.title = this.data.title;
     this.form = this.fb.group({
       name: [this.data.tasklist ? this.data.tasklist.name : '', Validators.required]
-    })
-
+    });
   }
 
   onSubmit({ value, valid }, ev: Event) {

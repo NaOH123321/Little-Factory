@@ -22,7 +22,7 @@ export class IdentityInputComponent implements OnInit, OnDestroy, ControlValueAc
     { value: IdentityType.Military, label: "军官证" },
     { value: IdentityType.Passport, label: "护照" },
     { value: IdentityType.Other, label: "其它" },
-  ]
+  ];
   identity: Identity = { identityNo: null, identityType: null };
   private _idType = new Subject<IdentityType>();
   private _idNo = new Subject<string>();

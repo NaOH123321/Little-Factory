@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Actions, Effect, ofType } from '@ngrx/effects';
 import { Router } from '@angular/router';
-import * as actions from '../actions/router.action'
+import * as actions from '../actions/router.action';
 import { tap, map } from 'rxjs/operators';
 
 @Injectable()

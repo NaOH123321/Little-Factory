@@ -1,5 +1,5 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
-import { getDate } from "date-fns"
+import { getDate } from "date-fns";
 import { Project } from 'src/app/domain';
 import { Observable } from 'rxjs';
 import * as fromRoot from '../../reducers';

@@ -1,4 +1,4 @@
-import { EntityAdapter, EntityState, createEntityAdapter } from "@ngrx/entity"
+import { EntityAdapter, EntityState, createEntityAdapter } from "@ngrx/entity";
 import { Task } from './../domain';
 import * as taskAction from '../actions/task.action';
 import * as projectAction from '../actions/project.action';
@@ -36,9 +36,9 @@ function delTasksByProject(state: State, action: projectAction.ProjectDeleteSucc
     const project = action.payload;
     const taskListIds = project.taskLists;
     if (taskListIds === undefined || taskListIds.length === 0) return state;
-    const taskIds = (<string[]>state.ids).filter(id => taskListIds.indexOf(state.entities[id].taskListId) !== -1)
+    const taskIds = (<string[]>state.ids).filter(id => taskListIds.indexOf(state.entities[id].taskListId) !== -1);
     return adapter.removeMany(taskIds, state);
-};
+}
 
 export function reducer(state = initialState, action: taskAction.TaskActions | projectAction.ProjectActions): State {
     switch (action.type) {

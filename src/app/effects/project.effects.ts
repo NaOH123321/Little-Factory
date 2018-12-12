@@ -43,9 +43,9 @@ export class ProjectEffects {
         switchMap(([project, auth]) => {
             const added = { ...<Project>project, members: [`${auth.userId}`] };
             return this.service$.add(added).pipe(
-                map(project => new actions.ProjectAddSuccessAction(project)),
+                map(prj => new actions.ProjectAddSuccessAction(prj)),
                 catchError(err => of(new actions.ProjectAddFailAction(JSON.stringify(err))))
-            )
+            );
         })
     );
 
@@ -63,7 +63,7 @@ export class ProjectEffects {
         map(action => action.payload),
         switchMap(project =>
             this.service$.update(project).pipe(
-                map(project => new actions.ProjectUpdateSuccessAction(project)),
+                map(prj => new actions.ProjectUpdateSuccessAction(prj)),
                 catchError(err => of(new actions.ProjectUpdateFailAction(JSON.stringify(err))))
             )
         )
@@ -75,7 +75,7 @@ export class ProjectEffects {
         map(action => action.payload),
         switchMap(project =>
             this.service$.del(project).pipe(
-                map(project => new actions.ProjectDeleteSuccessAction(project)),
+                map(prj => new actions.ProjectDeleteSuccessAction(prj)),
                 catchError(err => of(new actions.ProjectDeleteFailAction(JSON.stringify(err))))
             )
         )

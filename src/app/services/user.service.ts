@@ -98,16 +98,16 @@ export class UserService {
                 const url = `${this.config.uri}/${this.domain}/${userId}`;
                 if (index !== -1 && memberIds.indexOf(userId) === -1) {
                     pIds.splice(index, 1);
-                    return this.http.patch<User>(url, JSON.stringify({ projectIds: pIds }), { headers: this.headers })
+                    return this.http.patch<User>(url, JSON.stringify({ projectIds: pIds }), { headers: this.headers });
                 }
                 if (index === -1 && memberIds.indexOf(userId) !== -1) {
                     pIds.push(projectId);
-                    return this.http.patch<User>(url, JSON.stringify({ projectIds: pIds }), { headers: this.headers })
+                    return this.http.patch<User>(url, JSON.stringify({ projectIds: pIds }), { headers: this.headers });
                 }
-                return of({ ...user, id: null })
+                return of({ ...user, id: null });
             }),
             filter(user => user.id !== null),
             reduce((acc: User[], curr: User) => [...acc, curr], [])
-        )
+        );
     }
 }

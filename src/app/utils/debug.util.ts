@@ -1,5 +1,5 @@
 import { Observable } from "rxjs";
-import { tap } from "rxjs/operators"
+import { tap } from "rxjs/operators";
 import { environment } from './../../environments/environment';
 
 export const debug = <T>(message: string) => tap<T>(
@@ -18,7 +18,7 @@ export const debug = <T>(message: string) => tap<T>(
             console.log("Complete -");
         }
     },
-)
+);
 
 const userDefined = <T>(source: Observable<T>) => new Observable<T>((subscriber) => {
     source.subscribe({

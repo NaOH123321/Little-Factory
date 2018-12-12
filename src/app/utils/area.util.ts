@@ -8,7 +8,7 @@ export const getProvinces = () => {
         }
     }
     return [...provinces];
-}
+};
 
 export const getCitiesByProvince = (province: string) => {
     if (!province || !city_data[province]) {
@@ -21,7 +21,7 @@ export const getCitiesByProvince = (province: string) => {
         }
     }
     return [...cities];
-}
+};
 
 export const getAreasByCity = (province: string, city: string) => {
     if (!province || !city || !city_data[province][city]) {
@@ -29,4 +29,4 @@ export const getAreasByCity = (province: string, city: string) => {
     }
     const districts = city_data[province][city];
     return [...districts];
-}
+};

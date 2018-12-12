@@ -135,14 +135,14 @@ export class BirthdayInputComponent implements OnInit, OnDestroy, ControlValueAc
       return null;
     if (isValidDate(val))
       return null;
-    return { birthdayInvalid: true }
+    return { birthdayInvalid: true };
   }
 
   validateDate(c: FormControl): { [key: string]: any } {
     const val = c.value;
     return isValidDate(val) ? null : {
       dateOfBirthInvalid: true
-    }
+    };
   }
 
   validateAge(ageNumKey: string, ageUnitKey: string) {
@@ -164,8 +164,8 @@ export class BirthdayInputComponent implements OnInit, OnDestroy, ControlValueAc
         default:
           break;
       }
-      return result ? null : { ageInvalid: true }
-    }
+      return result ? null : { ageInvalid: true };
+    };
   }
 
   toDate(age: Age): string {
@@ -189,17 +189,17 @@ export class BirthdayInputComponent implements OnInit, OnDestroy, ControlValueAc
       return {
         age: differenceInDays(now, date),
         unit: AgeUnit.Day
-      }
+      };
     } else if (isBefore(subMonths(now, this.monthsTop), date)) {
       return {
         age: differenceInMonths(now, date),
         unit: AgeUnit.Month
-      }
+      };
     } else {
       return {
         age: differenceInYears(now, date),
         unit: AgeUnit.Year
-      }
+      };
     }
   }
 }

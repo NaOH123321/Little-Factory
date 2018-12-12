@@ -3,7 +3,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Quote } from './../../domain';
 import { Observable } from 'rxjs';
 import { Store, select } from '@ngrx/store';
-import * as fromRoot from '../../reducers'
+import * as fromRoot from '../../reducers';
 import * as quoterActions from './../../actions/quote.action';
 import * as authActions from './../../actions/auth.action';
 

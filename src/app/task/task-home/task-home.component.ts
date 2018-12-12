@@ -75,8 +75,8 @@ export class TaskHomeComponent implements OnInit {
       switchMap(dialogRef => dialogRef.afterClosed().pipe(take(1)))
     ).subscribe(val => {
       if (val)
-        this.store$.dispatch(new taskActions.TaskMoveAllAction({ srcListId: list.id, targetListId: val }))
-    })
+        this.store$.dispatch(new taskActions.TaskMoveAllAction({ srcListId: list.id, targetListId: val }));
+    });
   }
 
   launchEditListDialog(list: TaskListVM) {

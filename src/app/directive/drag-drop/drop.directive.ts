@@ -1,6 +1,6 @@
 import { Directive, HostListener, ElementRef, Renderer2, Input, Output, EventEmitter } from '@angular/core';
 import { DragDropService, DragData } from '../drag-drop.service';
-import { take } from 'rxjs/operators'
+import { take } from 'rxjs/operators';
 
 @Directive({
   selector: '[app-Droppable][dropTags][droppableClass]'

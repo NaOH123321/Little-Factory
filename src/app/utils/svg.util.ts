@@ -1,5 +1,5 @@
-import { DomSanitizer } from "@angular/platform-browser"
-import { MatIconRegistry } from "@angular/material"
+import { DomSanitizer } from "@angular/platform-browser";
+import { MatIconRegistry } from "@angular/material";
 
 export const loadSvgResources = (ir: MatIconRegistry, ds: DomSanitizer) => {
     const imgDir = `assets/img`;
@@ -22,4 +22,4 @@ export const loadSvgResources = (ir: MatIconRegistry, ds: DomSanitizer) => {
     for (let i = 1; i <= 31; i++) {
         ir.addSvgIcon(`day${i}`, ds.bypassSecurityTrustResourceUrl(`${daysDir}/day${i}.svg`));
     }
-}
+};

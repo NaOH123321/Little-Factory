@@ -17,18 +17,21 @@ const routes: Routes = [
   },
   {
     path: "projects",
-    loadChildren: () => ProjectModule,
+    loadChildren: "./project/project.module#ProjectModule",
+    // loadChildren: () => ProjectModule,
     pathMatch: "full",
     canActivate: [AuthGuardService]
   },
   {
     path: "tasklists/:id",
-    loadChildren: () => TaskModule,
+    loadChildren: "./task/task.module#TaskModule",
+    // loadChildren: () => TaskModule,
     canActivate: [AuthGuardService]
   },
   {
     path: "mycal/:view",
-    loadChildren: () => MyCalendarModule,
+    loadChildren: "./my-calendar/index#MyCalendarModule",
+    // loadChildren: () => MyCalendarModule,
     canActivate: [AuthGuardService]
   },
   {

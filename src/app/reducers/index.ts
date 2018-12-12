@@ -12,17 +12,17 @@ import * as fromTaskList from './task-list.reducer';
 import * as fromTask from './task.reducer';
 import * as fromUser from './user.reducer';
 import { environment } from './../../environments/environment';
-import { storeFreeze } from 'ngrx-store-freeze'
+import { storeFreeze } from 'ngrx-store-freeze';
 import { TaskVM } from '../vm/task.vm';
 import { TaskListVM } from '../vm/task-list.vm';
 
 export interface State {
-    quote: fromQuote.State,
-    auth: Auth,
-    project: fromProject.State,
-    taskList: fromTaskList.State,
-    task: fromTask.State,
-    user: fromUser.State
+    quote: fromQuote.State;
+    auth: Auth;
+    project: fromProject.State;
+    taskList: fromTaskList.State;
+    task: fromTask.State;
+    user: fromUser.State;
 };
 
 const reducers: ActionReducerMap<State> = {
@@ -32,7 +32,7 @@ const reducers: ActionReducerMap<State> = {
     taskList: fromTaskList.reducer,
     task: fromTask.reducer,
     user: fromUser.reducer
-}
+};
 
 // console.log all actions
 export function logger(reducer: ActionReducer<State>): ActionReducer<State> {
@@ -118,8 +118,10 @@ export const getTasksWithOwners = createSelector(getTaskAll, getUserEntities, (t
         return {
             ...task,
             owner: userEntities[task.ownerId],
-            participants: task.participantIds !== null && task.participantIds !== undefined ? task.participantIds.map(id => userEntities[id]) : []
-        }
+            participants:
+                task.participantIds !== null && task.participantIds !== undefined ?
+                    task.participantIds.map(id => userEntities[id]) : []
+        };
     });
 });
 
@@ -128,7 +130,7 @@ export const getTaskListsByProject = createSelector(getTaskLists, getTasksWithOw
         return {
             ...taskList,
             tasks: tasks.filter(task => task.taskListId === taskList.id)
-        }
+        };
     });
 });
 

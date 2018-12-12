@@ -1,4 +1,4 @@
-import { EntityAdapter, EntityState, createEntityAdapter } from "@ngrx/entity"
+import { EntityAdapter, EntityState, createEntityAdapter } from "@ngrx/entity";
 import { User } from './../domain';
 import * as userAction from '../actions/user.action';
 

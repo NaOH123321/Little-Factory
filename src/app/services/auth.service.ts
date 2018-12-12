@@ -44,9 +44,9 @@ export class AuthService {
                     token: this.token,
                     user: res[0],
                     userId: res[0].id
-                }
+                };
             })
-        )
+        );
     }
 
 }

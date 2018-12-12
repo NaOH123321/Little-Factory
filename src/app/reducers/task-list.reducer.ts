@@ -1,5 +1,5 @@
 import { TaskListDeleteSuccessAction, TaskListSwapSuccessAction } from './../actions/task-list.action';
-import { EntityAdapter, EntityState, createEntityAdapter } from "@ngrx/entity"
+import { EntityAdapter, EntityState, createEntityAdapter } from "@ngrx/entity";
 import { TaskList } from './../domain';
 import * as taskListAction from '../actions/task-list.action';
 import * as projectAction from '../actions/project.action';
@@ -38,7 +38,7 @@ function delListByProject(state: State, action: projectAction.ProjectDeleteSucce
     const taskListIds = project.taskLists;
     if (taskListIds === undefined || taskListIds.length === 0) return state;
     return adapter.removeMany(taskListIds, state);
-};
+}
 
 export function reducer(state = initialState, action: taskListAction.TaskListActions | projectAction.ProjectActions): State {
     switch (action.type) {
