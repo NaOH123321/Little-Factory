@@ -7,7 +7,7 @@ import { loadSvgResources } from '../utils/svg.util';
 import { HttpClientModule } from '@angular/common/http';
 import { MatIconRegistry, MAT_DATE_LOCALE } from '@angular/material';
 import { SharedModule } from '../shared/shared.module';
-import { AppRoutingModule } from '../app-routing.module';
+import { AppRoutingModule } from './app-routing.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppStoreModule } from './../reducers/index';
 import { AppEffectsModule } from '../effects';

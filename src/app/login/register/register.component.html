@@ -22,8 +22,8 @@
                     <button mat-raised-button type="submit" color="primary" [disabled]="!form.valid">注册</button>
                 </mat-card-content>
                 <mat-card-actions class="text-right">
-                    <p>还没有账户？<a href="">登录</a></p>
-                    <p>忘记密码？<a href="">找回</a></p>
+                    <p>还没有账户？<a routerLink="/login">登录</a></p>
+                    <p>忘记密码？<a routerLink="/forgot">找回</a></p>
                 </mat-card-actions>
             </mat-tab>
             <mat-tab label="个人信息">
