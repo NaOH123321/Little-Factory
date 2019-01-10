@@ -12,17 +12,13 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppStoreModule } from './../reducers/index';
 import { AppEffectsModule } from '../effects';
 import { registerLocaleData } from '@angular/common';
-import "hammerjs"
+import 'hammerjs';
 
 import localeZh from '@angular/common/locales/zh';
 registerLocaleData(localeZh);
 
 @NgModule({
-  declarations: [
-    HeaderComponent,
-    SidebarComponent,
-    FooterComponent
-  ],
+  declarations: [HeaderComponent, SidebarComponent, FooterComponent],
   imports: [
     HttpClientModule,
     SharedModule,
@@ -39,20 +35,22 @@ registerLocaleData(localeZh);
   ],
   providers: [
     {
-      provide: "BASE_CONFIG", useValue: {
-        uri: "http://localhost:3000"
+      provide: 'BASE_CONFIG',
+      useValue: {
+        uri: 'http://localhost:3000'
       }
     },
     { provide: MAT_DATE_LOCALE, useValue: 'zh-Hans' }
   ]
 })
 export class CoreModule {
-  constructor(@Optional() @SkipSelf() parent: CoreModule,
+  constructor(
+    @Optional() @SkipSelf() parent: CoreModule,
     ir: MatIconRegistry,
     ds: DomSanitizer
   ) {
     if (parent) {
-      throw new Error("模块已经存在，不能再次加载！");
+      throw new Error('模块已经存在，不能再次加载！');
     }
     loadSvgResources(ir, ds);
   }

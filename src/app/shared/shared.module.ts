@@ -103,9 +103,6 @@ import { IdentityInputComponent } from './identity-input/identity-input.componen
     AreaListComponent,
     IdentityInputComponent
   ],
-  entryComponents: [
-    ConfirmDialogComponent
-  ]
+  entryComponents: [ConfirmDialogComponent]
 })
-export class SharedModule { }
-
+export class SharedModule {}
